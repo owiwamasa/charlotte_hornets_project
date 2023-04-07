@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       person_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       first_name: {
@@ -22,7 +22,7 @@ module.exports = {
         allowNull: false,
       },
       team_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {

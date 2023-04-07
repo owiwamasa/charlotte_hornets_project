@@ -14,10 +14,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Player.init(
     {
-      person_id: DataTypes.STRING,
+      person_id: DataTypes.INTEGER,
       first_name: DataTypes.STRING,
       last_name: DataTypes.STRING,
-      team_id: DataTypes.STRING,
+      team_id: DataTypes.INTEGER,
     },
     {
       sequelize,

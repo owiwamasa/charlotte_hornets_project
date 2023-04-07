@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       team_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       team_name: {
@@ -18,7 +18,7 @@ module.exports = {
         allowNull: false,
       },
       lg_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {

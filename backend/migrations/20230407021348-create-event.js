@@ -46,11 +46,11 @@ module.exports = {
         allowNull: false,
       },
       person_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       game_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {

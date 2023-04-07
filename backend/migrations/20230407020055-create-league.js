@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       lg_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       league: {

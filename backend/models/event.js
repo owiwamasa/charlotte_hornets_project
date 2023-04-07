@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       loc_x: DataTypes.FLOAT,
       loc_y: DataTypes.FLOAT,
       stat: DataTypes.STRING,
-      person_id: DataTypes.STRING,
-      game_id: DataTypes.STRING,
+      person_id: DataTypes.INTEGER,
+      game_id: DataTypes.INTEGER,
     },
     {
       sequelize,

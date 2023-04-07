@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       game_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       year: {
@@ -18,11 +18,11 @@ module.exports = {
         allowNull: false,
       },
       home_team_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
-      away_team_id: {
-        type: Sequelize.STRING,
+      visitor_team_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {

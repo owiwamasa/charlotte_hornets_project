@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   League.init(
     {
-      lg_id: DataTypes.STRING,
+      lg_id: DataTypes.INTEGER,
       league: DataTypes.STRING,
     },
     {
