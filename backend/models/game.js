@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Game.hasMany(models.Team, { foreignKey: "team_id" });
+      Game.hasMany(models.TeamBoxScore, { foreignKey: "team_id" });
       Game.hasMany(models.Event, { foreignKey: "game_id" });
+      Game.hasMany(models.PlayerBoxScore, { foreignKey: "person_id" });
     }
   }
   Game.init(
