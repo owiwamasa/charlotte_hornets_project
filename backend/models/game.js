@@ -8,15 +8,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Game.hasMany(models.Team, { foreignKey: "team_id" });
-      Game.hasMany(models.TeamBoxScore, { foreignKey: "team_id" });
+      Game.hasMany(models.TeamBoxScore, { foreignKey: "game_id" });
       Game.hasMany(models.Event, { foreignKey: "game_id" });
       Game.hasMany(models.PlayerBoxScore, { foreignKey: "person_id" });
+      Game.hasMany(models.TeamEvent, { foreignKey: "game_id" });
     }
   }
   Game.init(
     {
-      game_id: DataTypes.INTEGER,
       year: DataTypes.INTEGER,
       home_team_id: DataTypes.INTEGER,
       visitor_team_id: DataTypes.INTEGER,

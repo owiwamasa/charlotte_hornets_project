@@ -8,17 +8,17 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Team.belongsTo(models.League, { foreignKey: "lg_id" });
       Team.hasMany(models.Game, { foreignKey: "home_team_id" });
       Team.hasMany(models.Game, { foreignKey: "visitor_team_id" });
       Team.hasMany(models.Player, { foreignKey: "team_id" });
       Team.hasMany(models.TeamBoxScore, { foreignKey: "team_id" });
       Team.hasMany(models.TeamAverage, { foreignKey: "team_id" });
+      Team.hasMany(models.Event, { foreignKey: "team_id" });
+      Team.hasMany(models.TeamEvent, { foreignKey: "team_id" });
     }
   }
   Team.init(
     {
-      team_id: DataTypes.INTEGER,
       team_name: DataTypes.STRING,
       lg_id: DataTypes.INTEGER,
     },

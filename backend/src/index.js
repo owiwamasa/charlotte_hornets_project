@@ -14,15 +14,15 @@ app.use(cors());
 
 app.listen(port, () => console.log(`Running on port ${port}`));
 
-app.get(
-  "/team/:team_id",
-  asyncHandler(async (req, res) => {
-    const { team_id } = req.params;
-    const team = await Team.findOne({
-      where: { team_id },
-      include: [models.Player, models.TeamAverage],
-    });
+// app.get(
+//   "/team/:team_id",
+//   asyncHandler(async (req, res) => {
+//     const { team_id } = req.params;
+//     const team = await Team.findOne({
+//       where: { team_id },
+//       include: [models.Player, models.TeamAverage],
+//     });
 
-    res.send(team);
-  })
-);
+//     res.send(team);
+//   })
+// );

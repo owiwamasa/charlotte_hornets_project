@@ -7,22 +7,19 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      PlayerBoxScore.belongsTo(models.Player, { foreignKey: "person_id" });
-      PlayerBoxScore.belongsTo(models.Game, { foreignKey: "game_id" });
-    }
+    static associate(models) {}
   }
   PlayerBoxScore.init(
     {
       fg: DataTypes.INTEGER,
       fga: DataTypes.INTEGER,
-      fg_pct: DataTypes.FLOAT(1),
+      fg_pct: DataTypes.FLOAT,
       three_make: DataTypes.INTEGER,
       three_attempt: DataTypes.INTEGER,
-      three_pct: DataTypes.FLOAT(1),
+      three_pct: DataTypes.FLOAT,
       ftm: DataTypes.INTEGER,
       fta: DataTypes.INTEGER,
-      ft_pct: DataTypes.FLOAT(1),
+      ft_pct: DataTypes.FLOAT,
       orb: DataTypes.INTEGER,
       drb: DataTypes.INTEGER,
       trb: DataTypes.INTEGER,

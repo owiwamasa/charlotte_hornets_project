@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Player.belongsTo(models.Team, { foreignKey: "team_id" });
       Player.hasMany(models.Event, { foreignKey: "person_id" });
       Player.hasMany(models.PlayerBoxScore, { foreignKey: "person_id" });
       Player.hasMany(models.PlayerAverage, { foreignKey: "person_id" });
@@ -16,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   Player.init(
     {
-      person_id: DataTypes.INTEGER,
       first_name: DataTypes.STRING,
       last_name: DataTypes.STRING,
       team_id: DataTypes.INTEGER,
