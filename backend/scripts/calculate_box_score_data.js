@@ -20,72 +20,76 @@ const calculate_team_box_scores_by_game = async (game_id, team_id) => {
   const all_players_box_scores = [];
   for (let i = 0; i < players.length; i++) {
     let person_id = players[i].person_id;
-    const fg = await get_stat_total(game_id, person_id, [
-      "THREE_POINT_MADE",
-      "TWO_POINT_MADE",
-    ]);
-    const fga = await get_stat_total(game_id, person_id, [
-      "THREE_POINT_MADE",
-      "TWO_POINT_MADE",
-      "MISSED_TWO_POINT",
-      "MISSED_THREE_POINT",
-    ]);
-    const three_make = await get_stat_total(
-      game_id,
-      person_id,
-      "THREE_POINT_MADE"
-    );
-    const three_attempt = await get_stat_total(game_id, person_id, [
-      "THREE_POINT_MADE",
-      "MISSED_THREE_POINT",
-    ]);
-    const ftm = await get_stat_total(game_id, person_id, "FREE_THROW_MADE");
-    const fta = await get_stat_total(game_id, person_id, [
-      "FREE_THROW_MADE",
-      "MISSED_FREE_THROW",
-    ]);
-    const orb = await get_stat_total(game_id, person_id, "OFFENSIVE_REBOUND");
-    const drb = await get_stat_total(game_id, person_id, "DEFENSIVE_REBOUND");
-    const ast = await get_stat_total(game_id, person_id, "ASSIST");
-    const stl = await get_stat_total(game_id, person_id, "STEAL");
-    const blk = await get_stat_total(game_id, person_id, "BLOCKED_SHOT");
-    const to = await get_stat_total(game_id, person_id, "TURNOVER");
-    const pf = await get_stat_total(game_id, person_id, [
-      "PERSONAL_FOUL",
-      "OFFENSIVE_FOUL",
-    ]);
-    let player_box_score_data = {
-      person_id,
-      game_id,
-      fg,
-      fga,
-      fg_pct: (fg / fga) * 100,
-      three_make,
-      three_attempt,
-      three_pct: (three_make / three_attempt) * 100,
-      ftm,
-      fta,
-      ft_pct: (ftm / fta) * 100,
-      orb,
-      drb,
-      trb: orb + drb,
-      ast,
-      stl,
-      blk,
-      to,
-      pf,
-      pts: three_make * 3 + (fg - three_make) * 2 + ftm,
-    };
-    all_players_box_scores.push(player_box_score_data);
-    await create_player_box_score(player_box_score_data);
+    let player_played_in_game = await Event.findOne({
+      where: {
+        stat: "ENTERS_GAME",
+        game_id: game_id,
+        person_id: person_id,
+      },
+    });
+    if (player_played_in_game) {
+      const fg = await get_stat_total(game_id, person_id, [
+        "THREE_POINT_MADE",
+        "TWO_POINT_MADE",
+      ]);
+      const fga = await get_stat_total(game_id, person_id, [
+        "THREE_POINT_MADE",
+        "TWO_POINT_MADE",
+        "MISSED_TWO_POINT",
+        "MISSED_THREE_POINT",
+      ]);
+      const three_make = await get_stat_total(
+        game_id,
+        person_id,
+        "THREE_POINT_MADE"
+      );
+      const three_attempt = await get_stat_total(game_id, person_id, [
+        "THREE_POINT_MADE",
+        "MISSED_THREE_POINT",
+      ]);
+      const ftm = await get_stat_total(game_id, person_id, "FREE_THROW_MADE");
+      const fta = await get_stat_total(game_id, person_id, [
+        "FREE_THROW_MADE",
+        "MISSED_FREE_THROW",
+      ]);
+      const orb = await get_stat_total(game_id, person_id, "OFFENSIVE_REBOUND");
+      const drb = await get_stat_total(game_id, person_id, "DEFENSIVE_REBOUND");
+      const ast = await get_stat_total(game_id, person_id, "ASSIST");
+      const stl = await get_stat_total(game_id, person_id, "STEAL");
+      const blk = await get_stat_total(game_id, person_id, "BLOCKED_SHOT");
+      const to = await get_stat_total(game_id, person_id, "TURNOVER");
+      const pf = await get_stat_total(game_id, person_id, [
+        "PERSONAL_FOUL",
+        "OFFENSIVE_FOUL",
+      ]);
+      let player_box_score_data = {
+        person_id,
+        game_id,
+        fg,
+        fga,
+        fg_pct: (fg / fga) * 100,
+        three_make,
+        three_attempt,
+        three_pct: (three_make / three_attempt) * 100,
+        ftm,
+        fta,
+        ft_pct: (ftm / fta) * 100,
+        orb,
+        drb,
+        trb: orb + drb,
+        ast,
+        stl,
+        blk,
+        to,
+        pf,
+        pts: three_make * 3 + (fg - three_make) * 2 + ftm,
+      };
+      all_players_box_scores.push(player_box_score_data);
+      await create_player_box_score(player_box_score_data);
+    }
   }
 
-  let team_box_score = await create_team_box_score(
-    all_players_box_scores,
-    team_id,
-    game_id
-  );
-  console.log(team_box_score);
+  await create_team_box_score(all_players_box_scores, team_id, game_id);
   return all_players_box_scores;
 };
 

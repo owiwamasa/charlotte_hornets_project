@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       Player.belongsTo(models.Team, { foreignKey: "team_id" });
       Player.hasMany(models.Event, { foreignKey: "person_id" });
       Player.hasMany(models.PlayerBoxScore, { foreignKey: "person_id" });
+      Player.hasMany(models.PlayerAverage, { foreignKey: "person_id" });
     }
   }
   Player.init(
