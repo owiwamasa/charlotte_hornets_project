@@ -20,6 +20,7 @@ module.exports = {
       lg_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: { model: "Leagues" },
       },
       createdAt: {
         allowNull: false,

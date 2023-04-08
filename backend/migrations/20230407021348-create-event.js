@@ -48,10 +48,12 @@ module.exports = {
       person_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: { model: "Players" },
       },
       game_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: { model: "Games" },
       },
       createdAt: {
         allowNull: false,

@@ -20,10 +20,12 @@ module.exports = {
       home_team_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: { model: "Teams" },
       },
       visitor_team_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: { model: "Teams" },
       },
       createdAt: {
         allowNull: false,
