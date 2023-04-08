@@ -2,11 +2,12 @@ const db = require("../models");
 const { League, Game, Team, Player, Event } = db;
 
 const seed_db = async () => {
+  let all_files = [];
   for (let i = 1; i <= 22; i++) {
     const file = require(`../seed_data/pbp_${i}.json`);
-    const json_data = JSON.stringify(file);
-    await clean_and_seed_data(JSON.parse(json_data));
+    all_files = [...all_files, ...file];
   }
+  await clean_and_seed_data(all_files);
 };
 
 const clean_and_seed_data = async (data) => {
