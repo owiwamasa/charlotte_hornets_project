@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       team_name: DataTypes.STRING,
       lg_id: DataTypes.INTEGER,
+      logo_url: DataTypes.STRING,
     },
     {
       sequelize,
