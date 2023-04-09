@@ -1,12 +1,12 @@
 const db = require("../models");
 const { Op } = require("sequelize");
 const { Game, Player, Event, PlayerBoxScore, TeamBoxScore, TeamEvent } = db;
+const { mathRound } = require("../utils");
 
 const calculate_all_box_scores = async () => {
   const games = await Game.findAll();
   for (let i = 0; i < games.length; i++) {
     let game = games[i];
-    console.log("!!!!!!!!!!!!!!!!!", game.id);
     await calculate_team_box_scores_by_game(game.id, game.visitor_team_id);
     await calculate_team_box_scores_by_game(game.id, game.home_team_id);
   }
@@ -68,13 +68,16 @@ const calculate_team_box_scores_by_game = async (game_id, team_id) => {
         game_id,
         fg,
         fga,
-        fg_pct: (fg / fga) * 100,
+        fg_pct: !fga || !fg ? 0 : mathRound((fg / fga) * 100, 1),
         three_make,
         three_attempt,
-        three_pct: (three_make / three_attempt) * 100,
+        three_pct:
+          !three_attempt || !three_make
+            ? 0
+            : mathRound((three_make / three_attempt) * 100, 1),
         ftm,
         fta,
-        ft_pct: (ftm / fta) * 100,
+        ft_pct: !fta || !ftm ? 0 : mathRound((ftm / fta) * 100, 1),
         orb,
         drb,
         trb: orb + drb,
@@ -124,8 +127,7 @@ const get_team_event_stat_total = async (game_id, team_id, stat_type) => {
       stat: stat_type,
     },
   });
-  if (stat) return stat.length;
-  return 0;
+  return stat.length;
 };
 
 const create_player_box_score = async (data) => {
@@ -163,40 +165,70 @@ const create_team_box_score = async (
       game_id,
       fg: calculate_team_total(all_players_box_scores, "fg"),
       fga: calculate_team_total(all_players_box_scores, "fga"),
-      fg_pct:
-        (calculate_team_total(all_players_box_scores, "fg") /
-          calculate_team_total(all_players_box_scores, "fga")) *
-        100,
+      fg_pct: !calculate_team_total(all_players_box_scores, "fga")
+        ? 0
+        : mathRound(
+            (calculate_team_total(all_players_box_scores, "fg") /
+              calculate_team_total(all_players_box_scores, "fga")) *
+              100,
+            1
+          ),
       three_make: calculate_team_total(all_players_box_scores, "three_make"),
       three_attempt: calculate_team_total(
         all_players_box_scores,
         "three_attempt"
       ),
-      three_pct:
-        (calculate_team_total(all_players_box_scores, "three_make") /
-          calculate_team_total(all_players_box_scores, "three_attempt")) *
-        100,
+      three_pct: !calculate_team_total(all_players_box_scores, "three_attempt")
+        ? 0
+        : mathRound(
+            (calculate_team_total(all_players_box_scores, "three_make") /
+              calculate_team_total(all_players_box_scores, "three_attempt")) *
+              100,
+            1
+          ),
       ftm: calculate_team_total(all_players_box_scores, "ftm"),
       fta: calculate_team_total(all_players_box_scores, "fta"),
-      ft_pct:
-        (calculate_team_total(all_players_box_scores, "ftm") /
-          calculate_team_total(all_players_box_scores, "fta")) *
-        100,
+      ft_pct: !calculate_team_total(all_players_box_scores, "fta")
+        ? 0
+        : mathRound(
+            (calculate_team_total(all_players_box_scores, "ftm") /
+              calculate_team_total(all_players_box_scores, "fta")) *
+              100,
+            1
+          ),
       orb:
         calculate_team_total(all_players_box_scores, "orb") +
-        get_team_event_stat_total(game_id, team_id, "TEAM_OFFENSIVE_REBOUND"),
+        (await get_team_event_stat_total(
+          game_id,
+          team_id,
+          "TEAM_OFFENSIVE_REBOUND"
+        )),
       drb:
         calculate_team_total(all_players_box_scores, "drb") +
-        get_team_event_stat_total(game_id, team_id, "TEAM_DEFENSIVE_REBOUND"),
+        (await get_team_event_stat_total(
+          game_id,
+          team_id,
+          "TEAM_DEFENSIVE_REBOUND"
+        )),
       trb:
         calculate_team_total(all_players_box_scores, "orb") +
-        calculate_team_total(all_players_box_scores, "drb"),
+        calculate_team_total(all_players_box_scores, "drb") +
+        (await get_team_event_stat_total(
+          game_id,
+          team_id,
+          "TEAM_OFFENSIVE_REBOUND"
+        )) +
+        (await get_team_event_stat_total(
+          game_id,
+          team_id,
+          "TEAM_DEFENSIVE_REBOUND"
+        )),
       ast: calculate_team_total(all_players_box_scores, "ast"),
       stl: calculate_team_total(all_players_box_scores, "stl"),
       blk: calculate_team_total(all_players_box_scores, "blk"),
       to:
         calculate_team_total(all_players_box_scores, "to") +
-        get_team_event_stat_total(game_id, team_id, "TEAM_TURNOVER"),
+        (await get_team_event_stat_total(game_id, team_id, "TEAM_TURNOVER")),
       pf: calculate_team_total(all_players_box_scores, "pf"),
       pts:
         calculate_team_total(all_players_box_scores, "three_make") * 3 +
