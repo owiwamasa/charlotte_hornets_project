@@ -1,24 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
-import axios from "axios";
 import TeamSelectorMenu from "./TeamSelectorMenu";
 
-const SelectedTeam = () => {
-  const [teams, setTeams] = useState<any[]>([]);
-  const [selectedTeam, setSelectedTeam] = useState<any>();
-
-  useEffect(() => {
-    axios.get("http://localhost:8080/teams").then((res) => {
-      setTeams(res.data);
-      setSelectedTeam(res.data[0]);
-    });
-  }, []);
-
+const SelectedTeam = ({ teams, selectedTeam, setSelectedTeam }: any) => {
   return (
     <Box
       sx={{
         backgroundColor: "black",
-        padding: "5% 5% 0 5%",
+        padding: "50px 50px 0 50px",
         display: "flex",
         justifyContent: "space-between",
         height: "300px",

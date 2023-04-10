@@ -1,18 +1,7 @@
 import React from "react";
-import {
-  Box,
-  InputLabel,
-  MenuItem,
-  Select,
-  FormControl,
-  Typography,
-} from "@mui/material";
-import { SelectChangeEvent } from "@mui/material/Select";
+import { InputLabel, MenuItem, Select, FormControl } from "@mui/material";
 
 const TeamSelectorMenu = ({ teams, selectedTeam, setSelectedTeam }: any) => {
-  const handleChange = (event: SelectChangeEvent) => {
-    setSelectedTeam(event.target.value);
-  };
   return (
     <FormControl
       variant="standard"
@@ -20,6 +9,12 @@ const TeamSelectorMenu = ({ teams, selectedTeam, setSelectedTeam }: any) => {
         color: "white",
         minWidth: "140px",
         marginTop: "20px",
+        "& label.Mui-focused": {
+          color: "white",
+        },
+        "& .css-1ykkd29-MuiInputBase-root-MuiInput-root-MuiSelect-root:after": {
+          borderBottom: "none",
+        },
       }}
     >
       <InputLabel
@@ -32,8 +27,8 @@ const TeamSelectorMenu = ({ teams, selectedTeam, setSelectedTeam }: any) => {
         Select Team
       </InputLabel>
       <Select
-        value={selectedTeam}
-        onChange={handleChange}
+        value={selectedTeam ? selectedTeam : ""}
+        onChange={(e) => setSelectedTeam(e.target.value)}
         sx={{
           color: "white",
           borderBottom: "2px solid white",
@@ -48,6 +43,7 @@ const TeamSelectorMenu = ({ teams, selectedTeam, setSelectedTeam }: any) => {
       >
         {teams.map((team: any) => (
           <MenuItem
+            key={team.id}
             value={team}
             sx={{
               display: "flex",
@@ -56,34 +52,7 @@ const TeamSelectorMenu = ({ teams, selectedTeam, setSelectedTeam }: any) => {
               fontSize: "16px",
             }}
           >
-            {/* <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "white",
-                height: "30px",
-                width: "30px",
-                borderRadius: "50%",
-                overflow: "hidden",
-              }}
-            >
-              <img
-                src={team.logo_url}
-                alt="team logo"
-                height="20px"
-                width="auto"
-              />
-            </Box>
-            <Typography
-              sx={{
-                marginLeft: "12px",
-                fontFamily: "Montserrat",
-                fontSize: "16px",
-              }}
-            > */}
-            {team.team_name}
-            {/* </Typography> */}
+            {team?.team_name}
           </MenuItem>
         ))}
       </Select>

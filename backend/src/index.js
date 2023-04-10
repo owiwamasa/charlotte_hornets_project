@@ -42,7 +42,6 @@ app.get(
     const team = await Team.findByPk(team_id, {
       include: [TeamAverage],
     });
-
     const players = await Player.findAll({
       where: { team_id },
       include: [PlayerAverage],
@@ -63,16 +62,16 @@ app.get(
       include: [TeamBoxScore],
       order: [[{ model: TeamBoxScore }, "game_id", "ASC"]],
     });
-
-    res.send({
-      team: {
-        box_scores: team.TeamBoxScores,
-        season_avg: calculate_change_in_average_by_game(
-          team.TeamBoxScores,
-          stat_name
-        ),
-      },
-    });
+    const season_avg = calculate_change_in_average_by_game(
+      team.TeamBoxScores,
+      stat_name
+    );
+    const formatted_data = team.TeamBoxScores.map((box_score, index) => ({
+      game_number: index + 1,
+      game_total: box_score[stat_name],
+      avg: season_avg[index],
+    }));
+    res.send(formatted_data);
   })
 );
 
