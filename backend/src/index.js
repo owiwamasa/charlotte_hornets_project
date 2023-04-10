@@ -28,7 +28,9 @@ app.listen(port, () => console.log(`Running on port ${port}`));
 app.get(
   "/teams",
   async_handler(async (req, res) => {
-    const teams = await Team.findAll();
+    const teams = await Team.findAll({
+      order: [["team_name", "ASC"]],
+    });
     res.send(teams);
   })
 );
