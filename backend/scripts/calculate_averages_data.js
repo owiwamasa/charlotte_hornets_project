@@ -1,5 +1,5 @@
 const db = require("../models");
-const { mathRound } = require("../utils");
+const { math_round } = require("../utils");
 const {
   PlayerBoxScore,
   TeamBoxScore,
@@ -35,7 +35,7 @@ const get_averages = (box_scores) => {
     fga: calculate_average(box_scores, "fga"),
     fg_pct: !calculate_average(box_scores, "fga")
       ? 0
-      : mathRound(
+      : math_round(
           (calculate_average(box_scores, "fg") /
             calculate_average(box_scores, "fga")) *
             100,
@@ -45,7 +45,7 @@ const get_averages = (box_scores) => {
     three_attempt: calculate_average(box_scores, "three_attempt"),
     three_pct: !calculate_average(box_scores, "three_attempt")
       ? 0
-      : mathRound(
+      : math_round(
           (calculate_average(box_scores, "three_make") /
             calculate_average(box_scores, "three_attempt")) *
             100,
@@ -55,7 +55,7 @@ const get_averages = (box_scores) => {
     fta: calculate_average(box_scores, "fta"),
     ft_pct: !calculate_average(box_scores, "fta")
       ? 0
-      : mathRound(
+      : math_round(
           (calculate_average(box_scores, "ftm") /
             calculate_average(box_scores, "fta")) *
             100,
@@ -63,7 +63,7 @@ const get_averages = (box_scores) => {
         ),
     orb: calculate_average(box_scores, "orb"),
     drb: calculate_average(box_scores, "drb"),
-    trb: mathRound(
+    trb: math_round(
       calculate_average(box_scores, "orb") +
         calculate_average(box_scores, "drb"),
       1
@@ -83,7 +83,7 @@ const calculate_average = (box_scores, stat) => {
     (acc, box_score) => acc + box_score[stat],
     0
   );
-  return mathRound(stat_total / games_played, 1);
+  return math_round(stat_total / games_played, 1);
 };
 
 const create_player_average = async (data, person_id) => {

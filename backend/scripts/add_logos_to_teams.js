@@ -3,7 +3,6 @@ const { Team } = db;
 
 const add_logo_url_to_team = async (team_name, logo_url) => {
   const team = await Team.update({ logo_url }, { where: { team_name } });
-  console.log(team);
 };
 
 add_logo_url_to_team(

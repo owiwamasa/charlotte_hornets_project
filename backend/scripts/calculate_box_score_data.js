@@ -1,7 +1,7 @@
 const db = require("../models");
 const { Op } = require("sequelize");
 const { Game, Player, Event, PlayerBoxScore, TeamBoxScore, TeamEvent } = db;
-const { mathRound } = require("../utils");
+const { math_round } = require("../utils");
 
 const calculate_all_box_scores = async () => {
   const games = await Game.findAll();
@@ -68,16 +68,16 @@ const calculate_team_box_scores_by_game = async (game_id, team_id) => {
         game_id,
         fg,
         fga,
-        fg_pct: !fga || !fg ? 0 : mathRound((fg / fga) * 100, 1),
+        fg_pct: !fga || !fg ? 0 : math_round((fg / fga) * 100, 1),
         three_make,
         three_attempt,
         three_pct:
           !three_attempt || !three_make
             ? 0
-            : mathRound((three_make / three_attempt) * 100, 1),
+            : math_round((three_make / three_attempt) * 100, 1),
         ftm,
         fta,
-        ft_pct: !fta || !ftm ? 0 : mathRound((ftm / fta) * 100, 1),
+        ft_pct: !fta || !ftm ? 0 : math_round((ftm / fta) * 100, 1),
         orb,
         drb,
         trb: orb + drb,
@@ -167,7 +167,7 @@ const create_team_box_score = async (
       fga: calculate_team_total(all_players_box_scores, "fga"),
       fg_pct: !calculate_team_total(all_players_box_scores, "fga")
         ? 0
-        : mathRound(
+        : math_round(
             (calculate_team_total(all_players_box_scores, "fg") /
               calculate_team_total(all_players_box_scores, "fga")) *
               100,
@@ -180,7 +180,7 @@ const create_team_box_score = async (
       ),
       three_pct: !calculate_team_total(all_players_box_scores, "three_attempt")
         ? 0
-        : mathRound(
+        : math_round(
             (calculate_team_total(all_players_box_scores, "three_make") /
               calculate_team_total(all_players_box_scores, "three_attempt")) *
               100,
@@ -190,7 +190,7 @@ const create_team_box_score = async (
       fta: calculate_team_total(all_players_box_scores, "fta"),
       ft_pct: !calculate_team_total(all_players_box_scores, "fta")
         ? 0
-        : mathRound(
+        : math_round(
             (calculate_team_total(all_players_box_scores, "ftm") /
               calculate_team_total(all_players_box_scores, "fta")) *
               100,
