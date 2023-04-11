@@ -1,7 +1,13 @@
 import React from "react";
 import { InputLabel, MenuItem, Select, FormControl } from "@mui/material";
+import { TeamType } from "../../models";
+interface Props {
+  teams: TeamType[];
+  selectedTeam?: TeamType;
+  setSelectedTeam: React.Dispatch<React.SetStateAction<TeamType | undefined>>;
+}
 
-const TeamSelectorMenu = ({ teams, selectedTeam, setSelectedTeam }: any) => {
+const TeamSelectorMenu = ({ teams, selectedTeam, setSelectedTeam }: Props) => {
   return (
     <FormControl
       variant="standard"
@@ -28,6 +34,7 @@ const TeamSelectorMenu = ({ teams, selectedTeam, setSelectedTeam }: any) => {
       </InputLabel>
       <Select
         value={selectedTeam ? selectedTeam : ""}
+        // @ts-ignore
         onChange={(e) => setSelectedTeam(e.target.value)}
         sx={{
           color: "white",
@@ -41,7 +48,8 @@ const TeamSelectorMenu = ({ teams, selectedTeam, setSelectedTeam }: any) => {
           },
         }}
       >
-        {teams.map((team: any) => (
+        {teams.map((team: TeamType) => (
+          // @ts-ignore
           <MenuItem
             key={team.id}
             value={team}

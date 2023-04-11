@@ -6,8 +6,15 @@ import {
   CircularLogoBackground,
   TeamHeaderContainer,
 } from "./styledComponents";
+import { TeamType } from "../../models";
 
-const SelectedTeam = ({ teams, selectedTeam, setSelectedTeam }: any) => {
+interface Props {
+  teams: TeamType[];
+  selectedTeam?: TeamType;
+  setSelectedTeam: React.Dispatch<React.SetStateAction<TeamType | undefined>>;
+}
+
+const SelectedTeam = ({ teams, selectedTeam, setSelectedTeam }: Props) => {
   return (
     <SelectedTeamContainer>
       <TeamHeaderContainer>

@@ -6,16 +6,23 @@ import TeamStats from "./components/TeamStats";
 import TeamTrendsGraph from "./components/TeamTrendsGraph";
 import PlayerStats from "./components/PlayerStats";
 import { AppContainer, TeamTrendsGraphContainer } from "./styledComponents";
+import {
+  TeamType,
+  AverageStatType,
+  TeamTrendStatType,
+  PlayerAverageStatType,
+} from "./models";
 
 function App() {
-  const [teams, setTeams] = useState<any[]>([]);
-  const [selectedTeam, setSelectedTeam] = useState<any>();
-  const [selectedTeamStat, setSelectedTeamStat] = useState<any>("PTS");
-  const [teamAverageStats, setTeamAverageStats] = useState<any>();
-  const [teamTrendStats, setTeamTrendStats] = useState<any>();
-  const [playerAverageStats, setPlayerAverageStats] = useState<any>();
-  const [selectedPlayer, setSelectedPlayer] = useState<any>();
-  const [selectedPlayerStat, setSelectedPlayerStat] = useState<any>("PTS");
+  const [teams, setTeams] = useState<TeamType[]>([]);
+  const [selectedTeam, setSelectedTeam] = useState<TeamType>();
+  const [selectedTeamStat, setSelectedTeamStat] = useState<string>("PTS");
+  const [teamAverageStats, setTeamAverageStats] = useState<AverageStatType>();
+  const [teamTrendStats, setTeamTrendStats] = useState<TeamTrendStatType[]>();
+  const [playerAverageStats, setPlayerAverageStats] =
+    useState<PlayerAverageStatType[]>();
+  const [selectedPlayer, setSelectedPlayer] = useState<number>();
+  const [selectedPlayerStat, setSelectedPlayerStat] = useState<string>("PTS");
 
   useEffect(() => {
     axios.get("http://localhost:8080/teams").then((res) => {

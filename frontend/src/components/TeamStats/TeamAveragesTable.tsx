@@ -6,9 +6,13 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { averageStatHeaders } from "../../models";
+import { averageStatHeaders, AverageStatType } from "../../models";
 
-const TeamAveragesTable = ({ teamAverageStats }: any) => {
+interface Props {
+  teamAverageStats: AverageStatType;
+}
+
+const TeamAveragesTable = ({ teamAverageStats }: Props) => {
   return (
     <Table>
       <TableHead>
@@ -25,8 +29,9 @@ const TeamAveragesTable = ({ teamAverageStats }: any) => {
       </TableHead>
       <TableBody>
         <TableRow>
-          {Object.values(averageStatHeaders)?.map((stat: any) => (
+          {Object.values(averageStatHeaders)?.map((stat: string) => (
             <TableCell key={stat} sx={{ fontFamily: "Montserrat" }}>
+              {/* @ts-ignore */}
               {teamAverageStats[stat]}
             </TableCell>
           ))}

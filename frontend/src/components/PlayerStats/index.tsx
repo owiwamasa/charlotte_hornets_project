@@ -2,6 +2,16 @@ import React from "react";
 import PlayerAveragesTable from "./PlayerAveragesTable";
 import { PlayerStatsContainer } from "./styledComponents";
 import { MontserratText } from "../../styledComponents";
+import { PlayerAverageStatType, TeamType } from "../../models";
+
+interface Props {
+  playerAverageStats: PlayerAverageStatType[];
+  selectedPlayer?: number;
+  setSelectedPlayer: React.Dispatch<React.SetStateAction<number | undefined>>;
+  selectedPlayerStat: string;
+  setSelectedPlayerStat: React.Dispatch<React.SetStateAction<string>>;
+  selectedTeam?: TeamType;
+}
 
 const PlayerStats = ({
   playerAverageStats,
@@ -10,7 +20,7 @@ const PlayerStats = ({
   selectedPlayerStat,
   setSelectedPlayerStat,
   selectedTeam,
-}: any) => {
+}: Props) => {
   return (
     <PlayerStatsContainer
       sx={{

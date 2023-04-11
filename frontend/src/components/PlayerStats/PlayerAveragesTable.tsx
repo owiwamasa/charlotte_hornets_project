@@ -13,6 +13,16 @@ import StatSelectorMenu from "../../assets/StatSelectorMenu";
 import PlayerTrendsGraph from "./PlayerTrendsGraph";
 import { MontserratText } from "../../styledComponents";
 import { GraphsContainer, PlayerDropdownContainer } from "./styledComponents";
+import { PlayerAverageStatType, TeamType } from "../../models";
+
+interface Props {
+  playerAverageStats: PlayerAverageStatType[];
+  selectedPlayer?: number;
+  setSelectedPlayer: React.Dispatch<React.SetStateAction<number | undefined>>;
+  selectedPlayerStat: string;
+  setSelectedPlayerStat: React.Dispatch<React.SetStateAction<string>>;
+  selectedTeam?: TeamType;
+}
 
 const PlayerAveragesTable = ({
   playerAverageStats,
@@ -21,10 +31,10 @@ const PlayerAveragesTable = ({
   selectedPlayerStat,
   setSelectedPlayerStat,
   selectedTeam,
-}: any) => {
-  const handleClick = (playerId: any) => {
+}: Props) => {
+  const handleClick = (playerId: number) => {
     if (selectedPlayer === playerId) {
-      setSelectedPlayer();
+      setSelectedPlayer(undefined);
     } else {
       setSelectedPlayer(playerId);
     }
@@ -45,7 +55,7 @@ const PlayerAveragesTable = ({
         </TableRow>
       </TableHead>
       <TableBody sx={{ width: "100%" }}>
-        {playerAverageStats.map((player: any) => (
+        {playerAverageStats.map((player: PlayerAverageStatType) => (
           <React.Fragment key={player.id}>
             <TableRow
               sx={{
@@ -82,6 +92,7 @@ const PlayerAveragesTable = ({
                       {`${player.first_name} ${player.last_name}`}{" "}
                     </MontserratText>
                   ) : (
+                    // @ts-ignore
                     player.PlayerAverages[0][stat]
                   )}
                 </TableCell>

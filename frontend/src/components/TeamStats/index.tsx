@@ -2,8 +2,13 @@ import React from "react";
 import { TeamStatsContainer } from "./styledComponents";
 import TeamAveragesTable from "./TeamAveragesTable";
 import { MontserratText } from "../../styledComponents";
+import { AverageStatType } from "../../models";
 
-const TeamStats = ({ teamAverageStats }: any) => {
+interface Props {
+  teamAverageStats: AverageStatType;
+}
+
+const TeamStats = ({ teamAverageStats }: Props) => {
   return (
     <TeamStatsContainer>
       <MontserratText

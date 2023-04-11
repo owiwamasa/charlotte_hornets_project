@@ -18,3 +18,53 @@ export const averageStatHeaders = {
   PF: "pf",
   PTS: "pts",
 };
+
+export interface TeamType {
+  id: number;
+  team_name: string;
+  lg_id: number;
+  logo_url: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface AverageStatType {
+  id: number;
+  ast: number;
+  blk: number;
+  drb: number;
+  fg: number;
+  fg_pct: number;
+  fga: number;
+  ft_pct: number;
+  fta: number;
+  ftm: number;
+  orb: number;
+  pf: number;
+  pts: number;
+  stl: number;
+  team_id: number;
+  three_attempt: number;
+  three_make: number;
+  three_pct: number;
+  to: number;
+  trb: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface PlayerAverageStatType {
+  PlayerAverages: AverageStatType[];
+  first_name: string;
+  id: number;
+  last_name: string;
+  team_id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface TeamTrendStatType {
+  avg: number;
+  game_number: number;
+  game_total: number;
+}

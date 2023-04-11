@@ -2,7 +2,12 @@ import React from "react";
 import { InputLabel, MenuItem, Select, FormControl } from "@mui/material";
 import { averageStatHeaders } from "../../models";
 
-const StatSelectorMenu = ({ selectedStat, setSelectedStat }: any) => {
+interface Props {
+  selectedStat: string;
+  setSelectedStat: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const StatSelectorMenu = ({ selectedStat, setSelectedStat }: Props) => {
   return (
     <FormControl
       variant="standard"

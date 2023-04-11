@@ -13,14 +13,23 @@ import CustomTooltip from "../../assets/CustomTooltip";
 import { averageStatHeaders } from "../../models";
 import { PlayerTrendGraphContainer } from "./styledComponents";
 import { MontserratText } from "../../styledComponents";
+import { TeamType, TeamTrendStatType } from "../../models";
+
+interface Props {
+  selectedPlayer?: number;
+  selectedPlayerStat: string;
+  isPctGraph: boolean;
+  selectedTeam?: TeamType;
+}
 
 const PlayerTrendsGraph = ({
   selectedPlayer,
   selectedPlayerStat,
   isPctGraph,
   selectedTeam,
-}: any) => {
-  const [stats, setStats] = useState<any>();
+}: Props) => {
+  const [stats, setStats] = useState<TeamTrendStatType[]>();
+
   useEffect(() => {
     axios
       .get(
@@ -34,7 +43,7 @@ const PlayerTrendsGraph = ({
           setStats(res.data?.avg);
         }
       });
-  }, [selectedPlayer, selectedPlayerStat, isPctGraph, selectedTeam.id]);
+  }, [selectedPlayer, selectedPlayerStat, isPctGraph, selectedTeam?.id]);
   if (!stats) return <></>;
 
   return (
@@ -62,7 +71,9 @@ const PlayerTrendsGraph = ({
         />
         <YAxis
           label={{
-            value: `${selectedPlayerStat}`,
+            value: !isPctGraph
+              ? `${selectedPlayerStat}`
+              : `% of Team ${selectedPlayerStat}`,
             angle: -90,
             fontSize: "16px",
             fontFamily: "Montserrat",

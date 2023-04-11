@@ -15,12 +15,19 @@ import {
   TeamTrendsGraphContainer,
 } from "./styledComponents";
 import { MontserratText } from "../../styledComponents";
+import { TeamTrendStatType } from "../../models";
+
+interface Props {
+  teamTrendStats: TeamTrendStatType[];
+  selectedTeamStat: string;
+  setSelectedTeamStat: React.Dispatch<React.SetStateAction<string>>;
+}
 
 const TeamTrendsGraph = ({
   teamTrendStats,
   selectedTeamStat,
   setSelectedTeamStat,
-}: any) => {
+}: Props) => {
   return (
     <TeamTrendsGraphContainer>
       <GraphHeaderContainer>
