@@ -21,6 +21,10 @@ const clean_and_seed_data = async (data) => {
     let year = game["@attributes"].Year;
     let home_team_id;
     let visitor_team_id;
+    let last_event = game.Event_pbp[game.Event_pbp.length - 1]["@attributes"];
+    let game_completed = last_event.Stat === "END_GAME";
+
+    if (!game_completed) continue;
 
     for (let j = 0; j < game.Event_pbp.length; j++) {
       let event = game.Event_pbp[j]["@attributes"];
@@ -40,6 +44,7 @@ const clean_and_seed_data = async (data) => {
           lg_id,
         });
       }
+
       if (home_team_id && visitor_team_id) {
         await create_game({ id: game_id, home_team_id, visitor_team_id, year });
         break;
@@ -134,7 +139,6 @@ const create_event = async (data) => {
 };
 
 const create_team_event = async (data) => {
-  console.log("!!!!!!!!!!!!!!", data);
   let team_event = await TeamEvent.findOne({
     where: { event_num: data.event_num, game_id: data.game_id },
   });
