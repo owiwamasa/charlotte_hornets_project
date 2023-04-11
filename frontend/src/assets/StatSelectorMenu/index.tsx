@@ -41,7 +41,7 @@ const StatSelectorMenu = ({ selectedStat, setSelectedStat }: any) => {
           },
         }}
       >
-        {[Object.keys(averageStatHeaders)].map((stat: any) => (
+        {Object.keys(averageStatHeaders).map((stat: any) => (
           <MenuItem
             key={stat}
             value={stat}

@@ -2,7 +2,11 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import PlayerAveragesTable from "./PlayerAveragesTable";
 
-const PlayerStats = ({ playerAverageStats }: any) => {
+const PlayerStats = ({
+  playerAverageStats,
+  selectedPlayer,
+  setSelectedPlayer,
+}: any) => {
   return (
     <Box
       sx={{
@@ -18,7 +22,11 @@ const PlayerStats = ({ playerAverageStats }: any) => {
       >
         Player Per Game Statistics
       </Typography>
-      <PlayerAveragesTable playerAverageStats={playerAverageStats} />
+      <PlayerAveragesTable
+        playerAverageStats={playerAverageStats}
+        selectedPlayer={selectedPlayer}
+        setSelectedPlayer={setSelectedPlayer}
+      />
     </Box>
   );
 };
