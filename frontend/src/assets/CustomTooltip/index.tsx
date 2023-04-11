@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import { MontserratText } from "../../styledComponents";
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
@@ -8,12 +9,15 @@ const CustomTooltip = ({ active, payload, label }: any) => {
         sx={{
           padding: "12px",
           backgroundColor: "black",
-          color: "white",
           borderRadius: "8px",
         }}
       >
-        <Typography>{`Game Total: ${payload[0]?.value}`}</Typography>
-        <Typography>{`Season Average: ${payload[1]?.value}`}</Typography>
+        <MontserratText
+          sx={{ color: "white" }}
+        >{`Game Total: ${payload[0]?.value}`}</MontserratText>
+        <MontserratText
+          sx={{ color: "#40D117" }}
+        >{`Season Average: ${payload[1]?.value}`}</MontserratText>
       </Box>
     );
   }

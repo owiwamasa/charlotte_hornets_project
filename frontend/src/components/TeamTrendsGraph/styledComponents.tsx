@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 
 export const TeamTrendsGraphContainer = styled(Box)(() => ({
   backgroundColor: "#FAF9F4",

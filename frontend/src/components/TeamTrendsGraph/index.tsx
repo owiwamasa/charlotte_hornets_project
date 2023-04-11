@@ -37,14 +37,37 @@ const TeamTrendsGraph = ({
       <LineChart
         width={1325}
         height={350}
-        margin={{ left: -20 }}
+        margin={{ left: -4 }}
         data={teamTrendStats}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="game_number" />
-        <YAxis />
+        <XAxis
+          dataKey="game_number"
+          label={{
+            value: "Game Number",
+            position: "bottom",
+            fontFamily: "Montserrat",
+            fontSize: "16px",
+          }}
+        />
+        <YAxis
+          label={{
+            value: `${selectedTeamStat}`,
+            angle: -90,
+            fontSize: "16px",
+            fontFamily: "Montserrat",
+            dx: -16,
+          }}
+        />
         <Tooltip content={<CustomTooltip />} />
-        <Legend />
+        <Legend
+          align="center"
+          wrapperStyle={{
+            padding: "50px 0 0 40px",
+            fontFamily: "Montserrat",
+            fontSize: "16px",
+          }}
+        />
         <Line
           type="monotone"
           dataKey="game_total"
