@@ -42,18 +42,33 @@ function App() {
   }, [selectedTeam?.id, selectedTeamStat]);
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
       <SelectedTeam
         teams={teams}
         selectedTeam={selectedTeam}
         setSelectedTeam={setSelectedTeam}
       />
       {teamAverageStats && <TeamStats teamAverageStats={teamAverageStats} />}
-      <Box sx={{ backgroundColor: "#EDEDEB", padding: "150px 0 50px 0" }}>
+      <Box
+        sx={{
+          backgroundColor: "#EDEDEB",
+          padding: "200px 0 80px 0",
+          width: "100%",
+          boxSizing: "border-box",
+        }}
+      >
         {teamTrendStats && (
           <TeamTrendsGraph
             teamTrendStats={teamTrendStats}
             selectedTeamStat={selectedTeamStat}
+            setSelectedTeamStat={setSelectedTeamStat}
           />
         )}
       </Box>

@@ -18,21 +18,3 @@ export const averageStatHeaders = {
   PF: "pf",
   PTS: "pts",
 };
-
-export const selectStatMenu = {
-  FG: "fg",
-  FGA: "fga",
-  "3PTM": "three_make",
-  "3PTA": "three_attempt",
-  FTM: "ftm",
-  FTA: "fta",
-  ORB: "orb",
-  DRB: "drb",
-  TRB: "trb",
-  AST: "ast",
-  STL: "stl",
-  BLK: "blk",
-  TO: "to",
-  PF: "pf",
-  PTS: "pts",
-};

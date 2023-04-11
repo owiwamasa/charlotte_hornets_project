@@ -11,6 +11,8 @@ const SelectedTeam = ({ teams, selectedTeam, setSelectedTeam }: any) => {
         display: "flex",
         justifyContent: "space-between",
         height: "300px",
+        width: "100%",
+        boxSizing: "border-box",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", height: "100px" }}>

@@ -8,8 +8,8 @@ import {
   Tooltip,
   Legend,
   Line,
-  Label,
 } from "recharts";
+import StatSelectorMenu from "../../assets/StatSelectorMenu";
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
@@ -31,26 +31,42 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-const TeamTrendsGraph = ({ teamTrendStats, selectedTeamStat }: any) => {
+const TeamTrendsGraph = ({
+  teamTrendStats,
+  selectedTeamStat,
+  setSelectedTeamStat,
+}: any) => {
   return (
     <Box
       sx={{
         backgroundColor: "#FAF9F4",
-        padding: "50px ",
-        margin: "0 50px",
+        padding: "50px",
+        margin: "0 auto",
         borderRadius: "50px",
         boxShadow: "0px 3px 6px #00000029",
         width: "1232px",
         boxSizing: "border-box",
       }}
     >
-      <Typography
+      <Box
         sx={{
-          fontFamily: "Montserrat",
-          fontSize: "16px",
-          marginBottom: "30px",
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "24px",
         }}
-      >{`Team Season Trend for ${selectedTeamStat}`}</Typography>
+      >
+        <Typography
+          sx={{
+            fontFamily: "Montserrat",
+            fontSize: "16px",
+            marginBottom: "30px",
+          }}
+        >{`Team Season Trend for ${selectedTeamStat}`}</Typography>
+        <StatSelectorMenu
+          selectedStat={selectedTeamStat}
+          setSelectedStat={setSelectedTeamStat}
+        />
+      </Box>
       <LineChart
         width={1135}
         height={350}
