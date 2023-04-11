@@ -9,6 +9,7 @@ import {
   Legend,
   Line,
 } from "recharts";
+import { Box, Typography } from "@mui/material";
 import CustomTooltip from "../../assets/CustomTooltip";
 import { averageStatHeaders } from "../../models";
 
@@ -32,37 +33,44 @@ const PlayerTrendsGraph = ({
           setStats(res.data?.avg);
         }
       });
-  }, [selectedPlayer, selectedPlayerStat, isPctGraph]);
-  console.log(stats);
+  }, [selectedPlayer, selectedPlayerStat, isPctGraph, selectedTeam.id]);
   if (!stats) return <></>;
 
   return (
-    <LineChart
-      width={660}
-      height={200}
-      // margin={{ left: -20 }}
-      data={stats}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="game_number" />
-      <YAxis />
-      <Tooltip content={<CustomTooltip />} />
-      <Legend />
-      <Line
-        type="monotone"
-        dataKey="game_total"
-        stroke="black"
-        strokeWidth={3}
-        name="Game Total"
-      />
-      <Line
-        type="monotone"
-        dataKey="avg"
-        stroke="#40D117"
-        strokeWidth={3}
-        name="Season Average"
-      />
-    </LineChart>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Typography
+        sx={{
+          fontFamily: "Montserrat",
+          paddingLeft: "42px",
+          marginBottom: "12px",
+        }}
+      >
+        {isPctGraph
+          ? "Player % of Team Total"
+          : "Game Total and Season Average"}
+      </Typography>
+      <LineChart width={660} height={250} data={stats} margin={{ left: -20 }}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="game_number" />
+        <YAxis />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend />
+        <Line
+          type="monotone"
+          dataKey="game_total"
+          stroke="black"
+          strokeWidth={3}
+          name="Game Total"
+        />
+        <Line
+          type="monotone"
+          dataKey="avg"
+          stroke="#40D117"
+          strokeWidth={3}
+          name="Season Average"
+        />
+      </LineChart>
+    </Box>
   );
 };
 

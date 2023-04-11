@@ -104,14 +104,20 @@ const PlayerAveragesTable = ({
                     }}
                   >
                     <Typography
-                      sx={{ fontFamily: "Montserrat" }}
+                      sx={{ fontFamily: "Montserrat", fontSize: "20px" }}
                     >{`Player Season Trends for ${selectedPlayerStat}`}</Typography>
                     <StatSelectorMenu
                       selectedStat={selectedPlayerStat}
                       setSelectedStat={setSelectedPlayerStat}
                     />
                   </Box>
-                  <Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginTop: "16px",
+                    }}
+                  >
                     <PlayerTrendsGraph
                       selectedPlayer={selectedPlayer}
                       selectedPlayerStat={selectedPlayerStat}
