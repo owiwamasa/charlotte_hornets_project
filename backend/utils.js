@@ -42,7 +42,6 @@ const calculate_player_pct_of_team_totals = async (
     let team_box_score = await TeamBoxScore.findOne({
       where: { game_id: box_score.game_id, team_id },
     });
-    console.log(i + 1, JSON.stringify(team_box_score));
     team_sum += team_box_score[stat_name];
     res.push({
       game_number: i + 1,

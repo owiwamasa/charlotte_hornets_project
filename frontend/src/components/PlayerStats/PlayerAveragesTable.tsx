@@ -1,19 +1,18 @@
 import React from "react";
 import {
-  Button,
-  Typography,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Box,
 } from "@mui/material";
 import { averageStatHeaders } from "../../models";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StatSelectorMenu from "../../assets/StatSelectorMenu";
 import PlayerTrendsGraph from "./PlayerTrendsGraph";
+import { MontserratText } from "../../styledComponents";
+import { GraphsContainer, PlayerDropdownContainer } from "./styledComponents";
 
 const PlayerAveragesTable = ({
   playerAverageStats,
@@ -68,11 +67,9 @@ const PlayerAveragesTable = ({
                   sx={{ fontFamily: "Montserrat" }}
                 >
                   {index === 0 ? (
-                    <Typography
+                    <MontserratText
                       sx={{
-                        color: "black",
                         textTransform: "capitalize",
-                        fontFamily: "Montserrat",
                         display: "flex",
                         alignItems: "center",
                       }}
@@ -83,7 +80,7 @@ const PlayerAveragesTable = ({
                         <ChevronRightIcon sx={{ marginRight: "16px" }} />
                       )}
                       {`${player.first_name} ${player.last_name}`}{" "}
-                    </Typography>
+                    </MontserratText>
                   ) : (
                     player.PlayerAverages[0][stat]
                   )}
@@ -96,28 +93,16 @@ const PlayerAveragesTable = ({
                   colSpan={19}
                   sx={{ backgroundColor: "#EDEDEB", padding: "24px" }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      width: "100%",
-                    }}
-                  >
-                    <Typography
-                      sx={{ fontFamily: "Montserrat", fontSize: "20px" }}
-                    >{`Player Season Trends for ${selectedPlayerStat}`}</Typography>
+                  <PlayerDropdownContainer>
+                    <MontserratText
+                      sx={{ fontSize: "20px" }}
+                    >{`Player Season Trends for ${selectedPlayerStat}`}</MontserratText>
                     <StatSelectorMenu
                       selectedStat={selectedPlayerStat}
                       setSelectedStat={setSelectedPlayerStat}
                     />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      marginTop: "16px",
-                    }}
-                  >
+                  </PlayerDropdownContainer>
+                  <GraphsContainer>
                     <PlayerTrendsGraph
                       selectedPlayer={selectedPlayer}
                       selectedPlayerStat={selectedPlayerStat}
@@ -130,7 +115,7 @@ const PlayerAveragesTable = ({
                       isPctGraph={true}
                       selectedTeam={selectedTeam}
                     />
-                  </Box>
+                  </GraphsContainer>
                 </TableCell>
               </TableRow>
             )}

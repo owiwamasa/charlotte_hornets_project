@@ -1,32 +1,20 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { TeamStatsContainer } from "./styledComponents";
 import TeamAveragesTable from "./TeamAveragesTable";
+import { MontserratText } from "../../styledComponents";
 
 const TeamStats = ({ teamAverageStats }: any) => {
   return (
-    <Box
-      sx={{
-        margin: "0 50px",
-        backgroundColor: "#FAF9F5",
-        borderRadius: "50px",
-        boxShadow: "0px 3px 6px #00000029",
-        padding: "50px",
-        position: "absolute",
-        top: "200px",
-        width: "1323px",
-      }}
-    >
-      <Typography
+    <TeamStatsContainer>
+      <MontserratText
         sx={{
-          fontSize: "16px",
-          fontFamily: "Montserrat",
           marginBottom: "12px",
         }}
       >
         Team Per Game Statistics
-      </Typography>
+      </MontserratText>
       <TeamAveragesTable teamAverageStats={teamAverageStats} />
-    </Box>
+    </TeamStatsContainer>
   );
 };
 

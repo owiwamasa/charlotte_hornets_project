@@ -9,9 +9,10 @@ import {
   Legend,
   Line,
 } from "recharts";
-import { Box, Typography } from "@mui/material";
 import CustomTooltip from "../../assets/CustomTooltip";
 import { averageStatHeaders } from "../../models";
+import { PlayerTrendGraphContainer } from "./styledComponents";
+import { MontserratText } from "../../styledComponents";
 
 const PlayerTrendsGraph = ({
   selectedPlayer,
@@ -37,10 +38,9 @@ const PlayerTrendsGraph = ({
   if (!stats) return <></>;
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Typography
+    <PlayerTrendGraphContainer>
+      <MontserratText
         sx={{
-          fontFamily: "Montserrat",
           paddingLeft: "42px",
           marginBottom: "12px",
         }}
@@ -48,7 +48,7 @@ const PlayerTrendsGraph = ({
         {isPctGraph
           ? "Player % of Team Total"
           : "Game Total and Season Average"}
-      </Typography>
+      </MontserratText>
       <LineChart width={660} height={250} data={stats} margin={{ left: -20 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="game_number" />
@@ -70,7 +70,7 @@ const PlayerTrendsGraph = ({
           name="Season Average"
         />
       </LineChart>
-    </Box>
+    </PlayerTrendGraphContainer>
   );
 };
 

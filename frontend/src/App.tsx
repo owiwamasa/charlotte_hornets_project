@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/material";
 import axios from "axios";
 import { averageStatHeaders } from "./models";
 import SelectedTeam from "./components/SelectedTeam";
 import TeamStats from "./components/TeamStats";
 import TeamTrendsGraph from "./components/TeamTrendsGraph";
 import PlayerStats from "./components/PlayerStats";
+import { AppContainer, TeamTrendsGraphContainer } from "./styledComponents";
 
 function App() {
   const [teams, setTeams] = useState<any[]>([]);
@@ -45,29 +45,14 @@ function App() {
   }, [selectedTeam?.id, selectedTeamStat]);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        width: "100%",
-        paddingBottom: "80px",
-      }}
-    >
+    <AppContainer>
       <SelectedTeam
         teams={teams}
         selectedTeam={selectedTeam}
         setSelectedTeam={setSelectedTeam}
       />
       {teamAverageStats && <TeamStats teamAverageStats={teamAverageStats} />}
-      <Box
-        sx={{
-          backgroundColor: "#EDEDEB",
-          padding: "200px 0 80px 0",
-          width: "100%",
-          boxSizing: "border-box",
-        }}
-      >
+      <TeamTrendsGraphContainer>
         {teamTrendStats && (
           <TeamTrendsGraph
             teamTrendStats={teamTrendStats}
@@ -75,7 +60,7 @@ function App() {
             setSelectedTeamStat={setSelectedTeamStat}
           />
         )}
-      </Box>
+      </TeamTrendsGraphContainer>
       {playerAverageStats && (
         <PlayerStats
           playerAverageStats={playerAverageStats}
@@ -86,7 +71,7 @@ function App() {
           selectedTeam={selectedTeam}
         />
       )}
-    </Box>
+    </AppContainer>
   );
 }
 

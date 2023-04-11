@@ -1,5 +1,4 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
 import {
   LineChart,
   CartesianGrid,
@@ -11,6 +10,11 @@ import {
 } from "recharts";
 import StatSelectorMenu from "../../assets/StatSelectorMenu";
 import CustomTooltip from "../../assets/CustomTooltip";
+import {
+  GraphHeaderContainer,
+  TeamTrendsGraphContainer,
+} from "./styledComponents";
+import { MontserratText } from "../../styledComponents";
 
 const TeamTrendsGraph = ({
   teamTrendStats,
@@ -18,36 +22,18 @@ const TeamTrendsGraph = ({
   setSelectedTeamStat,
 }: any) => {
   return (
-    <Box
-      sx={{
-        backgroundColor: "#FAF9F4",
-        padding: "50px",
-        margin: "0 auto",
-        borderRadius: "50px",
-        boxShadow: "0px 3px 6px #00000029",
-        width: "1423px",
-        boxSizing: "border-box",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "24px",
-        }}
-      >
-        <Typography
+    <TeamTrendsGraphContainer>
+      <GraphHeaderContainer>
+        <MontserratText
           sx={{
-            fontFamily: "Montserrat",
-            fontSize: "16px",
             marginBottom: "30px",
           }}
-        >{`Team Season Trend for ${selectedTeamStat}`}</Typography>
+        >{`Team Season Trend for ${selectedTeamStat}`}</MontserratText>
         <StatSelectorMenu
           selectedStat={selectedTeamStat}
           setSelectedStat={setSelectedTeamStat}
         />
-      </Box>
+      </GraphHeaderContainer>
       <LineChart
         width={1325}
         height={350}
@@ -74,7 +60,7 @@ const TeamTrendsGraph = ({
           name="Season Average"
         />
       </LineChart>
-    </Box>
+    </TeamTrendsGraphContainer>
   );
 };
 

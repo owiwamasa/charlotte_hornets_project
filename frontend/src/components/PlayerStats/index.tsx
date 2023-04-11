@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material";
 import React from "react";
 import PlayerAveragesTable from "./PlayerAveragesTable";
+import { PlayerStatsContainer } from "./styledComponents";
+import { MontserratText } from "../../styledComponents";
 
 const PlayerStats = ({
   playerAverageStats,
@@ -11,20 +12,18 @@ const PlayerStats = ({
   selectedTeam,
 }: any) => {
   return (
-    <Box
+    <PlayerStatsContainer
       sx={{
         margin: "80px 0 50px",
       }}
     >
-      <Typography
+      <MontserratText
         sx={{
-          fontSize: "16px",
-          fontFamily: "Montserrat",
           marginBottom: "12px",
         }}
       >
         Player Per Game Statistics
-      </Typography>
+      </MontserratText>
       <PlayerAveragesTable
         playerAverageStats={playerAverageStats}
         selectedPlayer={selectedPlayer}
@@ -33,7 +32,7 @@ const PlayerStats = ({
         setSelectedPlayerStat={setSelectedPlayerStat}
         selectedTeam={selectedTeam}
       />
-    </Box>
+    </PlayerStatsContainer>
   );
 };
 
