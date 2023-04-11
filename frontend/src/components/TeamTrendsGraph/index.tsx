@@ -44,7 +44,7 @@ const TeamTrendsGraph = ({
         margin: "0 auto",
         borderRadius: "50px",
         boxShadow: "0px 3px 6px #00000029",
-        width: "1232px",
+        width: "1423px",
         boxSizing: "border-box",
       }}
     >
@@ -68,7 +68,7 @@ const TeamTrendsGraph = ({
         />
       </Box>
       <LineChart
-        width={1135}
+        width={1325}
         height={350}
         margin={{ left: -20 }}
         data={teamTrendStats}

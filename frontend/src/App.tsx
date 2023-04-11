@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import axios from "axios";
+import { averageStatHeaders } from "./models";
 import SelectedTeam from "./components/SelectedTeam";
 import TeamStats from "./components/TeamStats";
 import TeamTrendsGraph from "./components/TeamTrendsGraph";
-import { averageStatHeaders } from "./models";
+import PlayerStats from "./components/PlayerStats";
 
 function App() {
   const [teams, setTeams] = useState<any[]>([]);
@@ -48,6 +49,7 @@ function App() {
         flexDirection: "column",
         alignItems: "center",
         width: "100%",
+        paddingBottom: "80px",
       }}
     >
       <SelectedTeam
@@ -72,6 +74,9 @@ function App() {
           />
         )}
       </Box>
+      {playerAverageStats && (
+        <PlayerStats playerAverageStats={playerAverageStats} />
+      )}
     </Box>
   );
 }

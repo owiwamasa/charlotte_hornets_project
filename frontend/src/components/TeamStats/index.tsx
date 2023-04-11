@@ -13,6 +13,7 @@ const TeamStats = ({ teamAverageStats }: any) => {
         padding: "50px",
         position: "absolute",
         top: "200px",
+        width: "1323px",
       }}
     >
       <Typography
