@@ -15,6 +15,7 @@ function App() {
   const [teamTrendStats, setTeamTrendStats] = useState<any>();
   const [playerAverageStats, setPlayerAverageStats] = useState<any>();
   const [selectedPlayer, setSelectedPlayer] = useState<any>();
+  const [selectedPlayerStat, setSelectedPlayerStat] = useState<any>("PTS");
 
   useEffect(() => {
     axios.get("http://localhost:8080/teams").then((res) => {
@@ -80,6 +81,9 @@ function App() {
           playerAverageStats={playerAverageStats}
           selectedPlayer={selectedPlayer}
           setSelectedPlayer={setSelectedPlayer}
+          selectedPlayerStat={selectedPlayerStat}
+          setSelectedPlayerStat={setSelectedPlayerStat}
+          selectedTeam={selectedTeam}
         />
       )}
     </Box>

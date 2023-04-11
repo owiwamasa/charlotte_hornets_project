@@ -6,6 +6,9 @@ const PlayerStats = ({
   playerAverageStats,
   selectedPlayer,
   setSelectedPlayer,
+  selectedPlayerStat,
+  setSelectedPlayerStat,
+  selectedTeam,
 }: any) => {
   return (
     <Box
@@ -26,6 +29,9 @@ const PlayerStats = ({
         playerAverageStats={playerAverageStats}
         selectedPlayer={selectedPlayer}
         setSelectedPlayer={setSelectedPlayer}
+        selectedPlayerStat={selectedPlayerStat}
+        setSelectedPlayerStat={setSelectedPlayerStat}
+        selectedTeam={selectedTeam}
       />
     </Box>
   );

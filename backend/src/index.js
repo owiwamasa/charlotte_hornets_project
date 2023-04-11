@@ -76,21 +76,30 @@ app.get(
 );
 
 app.get(
-  "/players/:person_id/stats/:stat_name",
+  "/teams/:team_id/players/:person_id/stats/:stat_name",
   async_handler(async (req, res) => {
-    const { person_id, stat_name } = req.params;
+    const { person_id, stat_name, team_id } = req.params;
     const player = await Player.findByPk(person_id, {
       include: [PlayerBoxScore],
       order: [[{ model: PlayerBoxScore }, "game_id", "ASC"]],
     });
 
-    res.send({
-      box_scores: player.PlayerBoxScores,
-      season_avg: calculate_change_in_average_by_game(
-        player.PlayerBoxScores,
-        stat_name
-      ),
-      ...calculate_player_pct_of_team_totals(player.PlayerBoxScores.stat_name),
-    });
+    const season_avg = calculate_change_in_average_by_game(
+      player.PlayerBoxScores,
+      stat_name
+    );
+
+    const formatted_data = { avg: [], pct: [] };
+    formatted_data.avg = player.PlayerBoxScores.map((box_score, index) => ({
+      game_number: index + 1,
+      game_total: box_score[stat_name],
+      avg: season_avg[index],
+    }));
+    formatted_data.pct = await calculate_player_pct_of_team_totals(
+      player.PlayerBoxScores,
+      stat_name,
+      team_id
+    );
+    res.send(formatted_data);
   })
 );

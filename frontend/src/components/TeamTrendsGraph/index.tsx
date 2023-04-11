@@ -10,26 +10,7 @@ import {
   Line,
 } from "recharts";
 import StatSelectorMenu from "../../assets/StatSelectorMenu";
-
-const CustomTooltip = ({ active, payload, label }: any) => {
-  if (active && payload && payload.length) {
-    return (
-      <Box
-        sx={{
-          padding: "12px",
-          backgroundColor: "black",
-          color: "white",
-          borderRadius: "8px",
-        }}
-      >
-        <Typography>{`Game Total: ${payload[0]?.value}`}</Typography>
-        <Typography>{`Season Average: ${payload[1]?.value}`}</Typography>
-      </Box>
-    );
-  }
-
-  return null;
-};
+import CustomTooltip from "../../assets/CustomTooltip";
 
 const TeamTrendsGraph = ({
   teamTrendStats,

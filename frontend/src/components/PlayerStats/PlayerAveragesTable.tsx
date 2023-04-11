@@ -7,15 +7,21 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Box,
 } from "@mui/material";
 import { averageStatHeaders } from "../../models";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import StatSelectorMenu from "../../assets/StatSelectorMenu";
+import PlayerTrendsGraph from "./PlayerTrendsGraph";
 
 const PlayerAveragesTable = ({
   playerAverageStats,
   selectedPlayer,
   setSelectedPlayer,
+  selectedPlayerStat,
+  setSelectedPlayerStat,
+  selectedTeam,
 }: any) => {
   const handleClick = (playerId: any) => {
     if (selectedPlayer === playerId) {
@@ -31,6 +37,7 @@ const PlayerAveragesTable = ({
           {["Player Name", ...Object.keys(averageStatHeaders)].map((stat) => (
             <TableCell
               key={stat}
+              align="left"
               sx={{ fontFamily: "Montserrat", color: "#707070" }}
             >
               {stat}
@@ -38,47 +45,90 @@ const PlayerAveragesTable = ({
           ))}
         </TableRow>
       </TableHead>
-      <TableBody>
+      <TableBody sx={{ width: "100%" }}>
         {playerAverageStats.map((player: any) => (
-          <TableRow
-            key={player.id}
-            sx={{
-              backgroundColor:
-                selectedPlayer === player.id ? "#EDEDEB" : "white",
-              "&:hover": {
-                backgroundColor: "#EDEDEB",
-              },
-            }}
-            onClick={() => handleClick(player.id)}
-          >
-            {[
-              `${player.first_name} ${player.last_name}`,
-              ...Object.values(averageStatHeaders),
-            ]?.map((stat: string, index: number) => (
-              <TableCell key={stat} sx={{ fontFamily: "Montserrat" }}>
-                {index === 0 ? (
-                  <Typography
+          <React.Fragment key={player.id}>
+            <TableRow
+              sx={{
+                backgroundColor:
+                  selectedPlayer === player.id ? "#EDEDEB" : "white",
+                "&:hover": {
+                  backgroundColor: "#EDEDEB",
+                },
+              }}
+              onClick={() => handleClick(player.id)}
+            >
+              {[
+                `${player.first_name} ${player.last_name}`,
+                ...Object.values(averageStatHeaders),
+              ]?.map((stat: string, index: number) => (
+                <TableCell
+                  key={stat}
+                  align="left"
+                  sx={{ fontFamily: "Montserrat" }}
+                >
+                  {index === 0 ? (
+                    <Typography
+                      sx={{
+                        color: "black",
+                        textTransform: "capitalize",
+                        fontFamily: "Montserrat",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      {player.id === selectedPlayer ? (
+                        <ExpandMoreIcon sx={{ marginRight: "16px" }} />
+                      ) : (
+                        <ChevronRightIcon sx={{ marginRight: "16px" }} />
+                      )}
+                      {`${player.first_name} ${player.last_name}`}{" "}
+                    </Typography>
+                  ) : (
+                    player.PlayerAverages[0][stat]
+                  )}
+                </TableCell>
+              ))}
+            </TableRow>
+            {player.id === selectedPlayer && (
+              <TableRow>
+                <TableCell
+                  colSpan={19}
+                  sx={{ backgroundColor: "#EDEDEB", padding: "24px" }}
+                >
+                  <Box
                     sx={{
-                      color: "black",
-                      textTransform: "capitalize",
-                      fontFamily: "Montserrat",
                       display: "flex",
-                      alignItems: "center",
+                      justifyContent: "space-between",
+                      width: "100%",
                     }}
                   >
-                    {player.id === selectedPlayer ? (
-                      <ExpandMoreIcon sx={{ marginRight: "16px" }} />
-                    ) : (
-                      <ChevronRightIcon sx={{ marginRight: "16px" }} />
-                    )}
-                    {`${player.first_name} ${player.last_name}`}{" "}
-                  </Typography>
-                ) : (
-                  player.PlayerAverages[0][stat]
-                )}
-              </TableCell>
-            ))}
-          </TableRow>
+                    <Typography
+                      sx={{ fontFamily: "Montserrat" }}
+                    >{`Player Season Trends for ${selectedPlayerStat}`}</Typography>
+                    <StatSelectorMenu
+                      selectedStat={selectedPlayerStat}
+                      setSelectedStat={setSelectedPlayerStat}
+                    />
+                  </Box>
+                  <Box>
+                    <PlayerTrendsGraph
+                      selectedPlayer={selectedPlayer}
+                      selectedPlayerStat={selectedPlayerStat}
+                      isPctGraph={false}
+                      selectedTeam={selectedTeam}
+                    />
+                    <PlayerTrendsGraph
+                      selectedPlayer={selectedPlayer}
+                      selectedPlayerStat={selectedPlayerStat}
+                      isPctGraph={true}
+                      selectedTeam={selectedTeam}
+                    />
+                  </Box>
+                </TableCell>
+              </TableRow>
+            )}
+          </React.Fragment>
         ))}
       </TableBody>
     </Table>

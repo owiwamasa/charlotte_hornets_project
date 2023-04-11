@@ -27,14 +27,12 @@ const calculate_change_in_average_by_game = (box_scores, stat_name) => {
 
 const calculate_player_pct_of_team_totals = async (
   player_box_scores,
-  stat_name
+  stat_name,
+  team_id
 ) => {
   let player_sum = 0;
   let team_sum = 0;
-  let res = {
-    pct_of_team_total_per_game: [],
-    pct_of_team_total_season_avg: [],
-  };
+  let res = [];
 
   for (let i = 0; i < player_box_scores.length; i++) {
     let box_score = player_box_scores[i];
@@ -42,15 +40,22 @@ const calculate_player_pct_of_team_totals = async (
     player_sum += player_stat;
 
     let team_box_score = await TeamBoxScore.findOne({
-      where: { game_id: box_score.game_id },
+      where: { game_id: box_score.game_id, team_id },
     });
-    res.per_game.push(
-      math_round((player_stat / team_box_score[stat_name]) * 100, 1)
-    );
+    console.log(i + 1, JSON.stringify(team_box_score));
     team_sum += team_box_score[stat_name];
-    res.season_avg.push(math_round((player_sum / team_sum) * 100, 1));
+    res.push({
+      game_number: i + 1,
+      game_total:
+        player_sum !== 0 || team_sum !== 0
+          ? math_round((player_stat / team_box_score[stat_name]) * 100, 1)
+          : 0,
+      avg:
+        player_sum !== 0 || team_sum !== 0
+          ? math_round((player_sum / (i + 1) / (team_sum / (i + 1))) * 100, 1)
+          : 0,
+    });
   }
-
   return res;
 };
 
