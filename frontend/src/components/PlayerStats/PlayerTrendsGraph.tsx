@@ -50,7 +50,7 @@ const PlayerTrendsGraph = ({
     <PlayerTrendGraphContainer>
       <MontserratText
         sx={{
-          paddingLeft: "42px",
+          paddingLeft: "65px",
           marginBottom: "6px",
         }}
       >
