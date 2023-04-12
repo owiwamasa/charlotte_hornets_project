@@ -73,3 +73,5 @@ export type ShootingLocationPctType = {
   name: string;
   value: number;
 };
+
+export type SortType = "asc" | "desc";

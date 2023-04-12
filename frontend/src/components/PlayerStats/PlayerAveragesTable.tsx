@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
+  TableSortLabel,
 } from "@mui/material";
-import { averageStatHeaders } from "../../models";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StatSelectorMenu from "../../assets/StatSelectorMenu";
 import PlayerTrendsGraph from "./PlayerTrendsGraph";
 import { MontserratText } from "../../styledComponents";
 import { GraphsContainer, PlayerDropdownContainer } from "./styledComponents";
-import { PlayerAverageStatType, TeamType } from "../../models";
+import {
+  PlayerAverageStatType,
+  TeamType,
+  averageStatHeaders,
+  SortType,
+} from "../../models";
 import PlayerShootingLocationGraph from "./PlayerShootingLocationGraph";
 
 interface Props {
@@ -33,13 +38,46 @@ const PlayerAveragesTable = ({
   setSelectedPlayerStat,
   selectedTeam,
 }: Props) => {
-  const handleClick = (playerId: number) => {
+  const [orderBy, setOrderBy] = useState<string>("PTS");
+  const [sortDirection, setSortDirection] = useState<SortType>("asc");
+  const [sortedPlayerAverageStats, setSortedPlayerAverageStats] =
+    useState<PlayerAverageStatType[]>(playerAverageStats);
+
+  const handlePlayerClick = (playerId: number) => {
     if (selectedPlayer === playerId) {
       setSelectedPlayer(undefined);
     } else {
       setSelectedPlayer(playerId);
     }
   };
+
+  const handlePlayerSorting = (stat: string) => {
+    setOrderBy(stat);
+    if (sortDirection === "asc") {
+      setSortDirection("desc");
+      setSortedPlayerAverageStats(
+        sortedPlayerAverageStats.sort(
+          (a, b) =>
+            // @ts-ignore
+            a.PlayerAverages[0][averageStatHeaders[stat]] -
+            // @ts-ignore
+            b.PlayerAverages[0][averageStatHeaders[stat]]
+        )
+      );
+    } else {
+      setSortDirection("asc");
+      setSortedPlayerAverageStats(
+        sortedPlayerAverageStats.sort(
+          (a, b) =>
+            // @ts-ignore
+            b.PlayerAverages[0][averageStatHeaders[stat]] -
+            // @ts-ignore
+            a.PlayerAverages[0][averageStatHeaders[stat]]
+        )
+      );
+    }
+  };
+
   return (
     <Table sx={{ width: "1423px" }}>
       <TableHead>
@@ -50,13 +88,19 @@ const PlayerAveragesTable = ({
               align="left"
               sx={{ fontFamily: "Montserrat", color: "#707070" }}
             >
-              {stat}
+              <TableSortLabel
+                active={orderBy === stat}
+                direction={sortDirection}
+                onClick={() => handlePlayerSorting(stat)}
+              >
+                {stat}
+              </TableSortLabel>
             </TableCell>
           ))}
         </TableRow>
       </TableHead>
       <TableBody sx={{ width: "100%" }}>
-        {playerAverageStats.map((player: PlayerAverageStatType) => (
+        {sortedPlayerAverageStats.map((player: PlayerAverageStatType) => (
           <React.Fragment key={player.id}>
             <TableRow
               sx={{
@@ -66,7 +110,7 @@ const PlayerAveragesTable = ({
                   backgroundColor: "#EDEDEB",
                 },
               }}
-              onClick={() => handleClick(player.id)}
+              onClick={() => handlePlayerClick(player.id)}
             >
               {[
                 `${player.first_name} ${player.last_name}`,
