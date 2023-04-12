@@ -13,7 +13,7 @@ This application allows users to view a team's and individual player's season av
 - Select a team from the EuroLeague 2022 season in a dropdown menu
 - View selected team's traditional per game averages
 
-<img src='./frontend/src/assets/Images/team-selector-stats.png' width='500px' />
+<img src='./frontend/src/assets/Images/team-selector-stats.png' width='750px' />
 <br />
 <br />
 
@@ -23,7 +23,7 @@ This application allows users to view a team's and individual player's season av
 - Analyze a chosen team's game-by-game change in season average and game total for a selected statistic
 - Hover over a point on the line graph to view more detail in a custom tooltip
 
-<img src='./frontend/src/assets/Images/team-season-trends.png' width='500px' />
+<img src='./frontend/src/assets/Images/team-season-trends.png' width='750px' />
 <br />
 <br />
 
@@ -32,7 +32,7 @@ This application allows users to view a team's and individual player's season av
 - View a team roster's traditional per game averages
 - Sort roster by a particular statistic in ascending or descending order by clicking on a table header
 
-<img src='./frontend/src/assets/Images/player-per-game-stats.png' width='500px' />
+<img src='./frontend/src/assets/Images/player-per-game-stats.png' width='750px' />
 <br />
 <br />
 
@@ -41,7 +41,7 @@ This application allows users to view a team's and individual player's season av
 - Choose a traditional statistic from in dropdown menu
 - Analyze a chosen player's season trends for a selected statistic
 
-<img src='./frontend/src/assets/Images/selected-player.png' width='500px' />
+<img src='./frontend/src/assets/Images/selected-player.png' width='750px' />
   <br />
   <br />
 
@@ -50,7 +50,7 @@ This application allows users to view a team's and individual player's season av
 - Analyze a chosen player's game-by-game change in season average and game total for a selected statistic
 - Hover over a point on the line graph to view more detail in a custom tooltip
 
-<img src='./frontend/src/assets/Images/player-game-total-season-avg-trend.png' width='500px' />
+<img src='./frontend/src/assets/Images/player-game-total-season-avg-trend.png' width='750px' />
 <br />
 <br />
 
@@ -60,7 +60,7 @@ This application allows users to view a team's and individual player's season av
 - View the game-by-game change in season average and game total percentage for a selected statistic
 - Hover over a point on the line graph to view more detail in a custom tooltip
 
-<img src='./frontend/src/assets/Images/player-pct-team-total.png' width='500px' />
+<img src='./frontend/src/assets/Images/player-pct-team-total.png' width='750px' />
 <br />
 <br />
 
@@ -69,7 +69,13 @@ This application allows users to view a team's and individual player's season av
 - Upon selecting a shooting percentage in the 'Select Statistic' menu, a user can analyze a player's shooting percentages per location on the court
 - Hover over a point on the bar graph to view more detail in a custom tooltip
 
-<img src='./frontend/src/assets/Images/player-shooting-per-location.png' width='500px' />
+<img src='./frontend/src/assets/Images/player-shooting-per-location.png' width='750px' />
+<br />
+<br />
+
+## Database Schema:
+
+<img src='./frontend/src/assets/Images/db-schema.png' width='750px' />
 <br />
 <br />
 
