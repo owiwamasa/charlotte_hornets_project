@@ -80,7 +80,7 @@ const PlayerTrendsGraph = ({
             dx: -16,
           }}
         />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip content={<CustomTooltip isPctGraph={isPctGraph} />} />
         <Legend
           align="center"
           wrapperStyle={{
@@ -94,7 +94,7 @@ const PlayerTrendsGraph = ({
           dataKey="game_total"
           stroke="black"
           strokeWidth={3}
-          name="Game Total"
+          name={isPctGraph ? "Percentage of Team Total" : "Game Total"}
         />
         <Line
           type="monotone"
