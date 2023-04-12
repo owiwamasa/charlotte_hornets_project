@@ -60,7 +60,17 @@ const PlayerAveragesTable = ({
 
   const handlePlayerSorting = (stat: string) => {
     setOrderBy(stat);
-    if (sortDirection === "asc") {
+    if (stat === "Player Name" && sortDirection === "asc") {
+      setSortDirection("desc");
+      setSortedPlayerAverageStats(
+        descendingSort(playerAverageStats, "first_name")
+      );
+    } else if (stat === "Player Name" && sortDirection === "desc") {
+      setSortDirection("asc");
+      setSortedPlayerAverageStats(
+        ascendingSort(playerAverageStats, "first_name")
+      );
+    } else if (sortDirection === "asc") {
       setSortDirection("desc");
       setSortedPlayerAverageStats(descendingSort(playerAverageStats, stat));
     } else {
@@ -96,92 +106,93 @@ const PlayerAveragesTable = ({
         </TableRow>
       </TableHead>
       <TableBody>
-        {sortedPlayerAverageStats.map((player: PlayerAverageStatType) => (
-          <React.Fragment key={player.id}>
-            <TableRow
-              sx={{
-                backgroundColor:
-                  selectedPlayer === player.id ? "#EDEDEB" : "white",
-                "&:hover": {
-                  backgroundColor: "#EDEDEB",
-                },
-              }}
-              onClick={() => handlePlayerClick(player.id)}
-            >
-              {[
-                `${player.first_name} ${player.last_name}`,
-                ...Object.values(averageStatHeaders),
-              ]?.map((stat: string, index: number) => (
-                <TableCell
-                  key={stat}
-                  align="left"
-                  padding="none"
-                  sx={{ fontFamily: "Montserrat", padding: "12px 6px" }}
-                >
-                  {index === 0 ? (
-                    <MontserratText
-                      sx={{
-                        textTransform: "capitalize",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      {player.id === selectedPlayer ? (
-                        <ExpandMoreIcon sx={{ marginRight: "16px" }} />
-                      ) : (
-                        <ChevronRightIcon sx={{ marginRight: "16px" }} />
-                      )}
-                      {`${player.first_name} ${player.last_name}`}{" "}
-                    </MontserratText>
-                  ) : (
-                    // @ts-ignore
-                    player.PlayerAverages[0][stat]
-                  )}
-                </TableCell>
-              ))}
-            </TableRow>
-            {player.id === selectedPlayer && (
-              <TableRow>
-                <TableCell
-                  colSpan={19}
-                  sx={{ backgroundColor: "#EDEDEB", padding: "24px" }}
-                >
-                  <PlayerDropdownContainer>
-                    <MontserratText
-                      sx={{ fontSize: "20px" }}
-                    >{`Player Season Trends for ${selectedPlayerStat}`}</MontserratText>
-                    <StatSelectorMenu
-                      selectedStat={selectedPlayerStat}
-                      setSelectedStat={setSelectedPlayerStat}
-                    />
-                  </PlayerDropdownContainer>
-                  <GraphsContainer>
-                    <PlayerTrendsGraph
-                      selectedPlayer={selectedPlayer}
-                      selectedPlayerStat={selectedPlayerStat}
-                      isPctGraph={false}
-                      selectedTeam={selectedTeam}
-                    />
-                    {!selectedPlayerStat.includes("%") ? (
+        {sortedPlayerAverageStats &&
+          sortedPlayerAverageStats.map((player: PlayerAverageStatType) => (
+            <React.Fragment key={player.id}>
+              <TableRow
+                sx={{
+                  backgroundColor:
+                    selectedPlayer === player.id ? "#EDEDEB" : "white",
+                  "&:hover": {
+                    backgroundColor: "#EDEDEB",
+                  },
+                }}
+                onClick={() => handlePlayerClick(player.id)}
+              >
+                {[
+                  `${player.first_name} ${player.last_name}`,
+                  ...Object.values(averageStatHeaders),
+                ]?.map((stat: string, index: number) => (
+                  <TableCell
+                    key={stat}
+                    align="left"
+                    padding="none"
+                    sx={{ fontFamily: "Montserrat", padding: "12px 6px" }}
+                  >
+                    {index === 0 ? (
+                      <MontserratText
+                        sx={{
+                          textTransform: "capitalize",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        {player.id === selectedPlayer ? (
+                          <ExpandMoreIcon sx={{ marginRight: "16px" }} />
+                        ) : (
+                          <ChevronRightIcon sx={{ marginRight: "16px" }} />
+                        )}
+                        {`${player.first_name} ${player.last_name}`}{" "}
+                      </MontserratText>
+                    ) : (
+                      // @ts-ignore
+                      player.PlayerAverages[0][stat]
+                    )}
+                  </TableCell>
+                ))}
+              </TableRow>
+              {player.id === selectedPlayer && (
+                <TableRow>
+                  <TableCell
+                    colSpan={19}
+                    sx={{ backgroundColor: "#EDEDEB", padding: "24px" }}
+                  >
+                    <PlayerDropdownContainer>
+                      <MontserratText
+                        sx={{ fontSize: "20px" }}
+                      >{`Player Season Trends for ${selectedPlayerStat}`}</MontserratText>
+                      <StatSelectorMenu
+                        selectedStat={selectedPlayerStat}
+                        setSelectedStat={setSelectedPlayerStat}
+                      />
+                    </PlayerDropdownContainer>
+                    <GraphsContainer>
                       <PlayerTrendsGraph
                         selectedPlayer={selectedPlayer}
                         selectedPlayerStat={selectedPlayerStat}
-                        isPctGraph={true}
+                        isPctGraph={false}
                         selectedTeam={selectedTeam}
                       />
-                    ) : (
-                      <PlayerShootingLocationGraph
-                        selectedPlayer={selectedPlayer}
-                        selectedPlayerStat={selectedPlayerStat}
-                        selectedTeam={selectedTeam}
-                      />
-                    )}
-                  </GraphsContainer>
-                </TableCell>
-              </TableRow>
-            )}
-          </React.Fragment>
-        ))}
+                      {!selectedPlayerStat.includes("%") ? (
+                        <PlayerTrendsGraph
+                          selectedPlayer={selectedPlayer}
+                          selectedPlayerStat={selectedPlayerStat}
+                          isPctGraph={true}
+                          selectedTeam={selectedTeam}
+                        />
+                      ) : (
+                        <PlayerShootingLocationGraph
+                          selectedPlayer={selectedPlayer}
+                          selectedPlayerStat={selectedPlayerStat}
+                          selectedTeam={selectedTeam}
+                        />
+                      )}
+                    </GraphsContainer>
+                  </TableCell>
+                </TableRow>
+              )}
+            </React.Fragment>
+          ))}
       </TableBody>
     </Table>
   );
