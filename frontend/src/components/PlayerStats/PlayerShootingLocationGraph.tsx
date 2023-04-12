@@ -45,7 +45,7 @@ const PlayerShootingLocationGraph = ({
       <MontserratText sx={{ paddingLeft: "65px", marginBottom: "6px" }}>
         Shooting % per Location
       </MontserratText>
-      <BarChart width={660} height={310} data={shootingLocationData}>
+      <BarChart width={700} height={350} data={shootingLocationData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="name"

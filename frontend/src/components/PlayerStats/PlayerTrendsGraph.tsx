@@ -58,7 +58,7 @@ const PlayerTrendsGraph = ({
           ? "Player % of Team Total"
           : "Game Total and Season Average"}
       </MontserratText>
-      <LineChart width={660} height={310} data={stats}>
+      <LineChart width={700} height={350} data={stats}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="game_number"

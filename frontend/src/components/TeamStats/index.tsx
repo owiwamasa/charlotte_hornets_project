@@ -13,6 +13,7 @@ const TeamStats = ({ teamAverageStats }: Props) => {
     <TeamStatsContainer>
       <MontserratText
         sx={{
+          fontSize: "20px",
           marginBottom: "12px",
         }}
       >

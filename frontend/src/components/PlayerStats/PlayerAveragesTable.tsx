@@ -79,14 +79,19 @@ const PlayerAveragesTable = ({
   };
 
   return (
-    <Table sx={{ width: "1423px" }}>
+    <Table>
       <TableHead>
         <TableRow>
           {["Player Name", ...Object.keys(averageStatHeaders)].map((stat) => (
             <TableCell
               key={stat}
               align="left"
-              sx={{ fontFamily: "Montserrat", color: "#707070" }}
+              padding="none"
+              sx={{
+                fontFamily: "Montserrat",
+                color: "#707070",
+                padding: "6px",
+              }}
             >
               <TableSortLabel
                 active={orderBy === stat}
@@ -99,7 +104,7 @@ const PlayerAveragesTable = ({
           ))}
         </TableRow>
       </TableHead>
-      <TableBody sx={{ width: "100%" }}>
+      <TableBody>
         {sortedPlayerAverageStats.map((player: PlayerAverageStatType) => (
           <React.Fragment key={player.id}>
             <TableRow
@@ -119,7 +124,8 @@ const PlayerAveragesTable = ({
                 <TableCell
                   key={stat}
                   align="left"
-                  sx={{ fontFamily: "Montserrat" }}
+                  padding="none"
+                  sx={{ fontFamily: "Montserrat", padding: "12px 6px" }}
                 >
                   {index === 0 ? (
                     <MontserratText

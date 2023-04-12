@@ -33,6 +33,7 @@ const TeamTrendsGraph = ({
       <GraphHeaderContainer>
         <MontserratText
           sx={{
+            fontSize: "20px",
             marginBottom: "30px",
           }}
         >{`Team Season Trend for ${selectedTeamStat}`}</MontserratText>

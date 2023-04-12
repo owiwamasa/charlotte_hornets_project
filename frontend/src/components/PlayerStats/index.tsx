@@ -24,11 +24,12 @@ const PlayerStats = ({
   return (
     <PlayerStatsContainer
       sx={{
-        margin: "80px 0 50px",
+        margin: "80px 0 0",
       }}
     >
       <MontserratText
         sx={{
+          fontSize: "20px",
           marginBottom: "12px",
         }}
       >
