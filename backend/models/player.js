@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       Player.hasMany(models.Event, { foreignKey: "person_id" });
       Player.hasMany(models.PlayerBoxScore, { foreignKey: "person_id" });
       Player.hasMany(models.PlayerAverage, { foreignKey: "person_id" });
+      Player.hasOne(models.PlayerShootingLocationPct, {
+        foreignKey: "person_id",
+      });
     }
   }
   Player.init(

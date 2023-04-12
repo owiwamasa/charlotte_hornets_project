@@ -6,6 +6,7 @@ const {
   async_handler,
   calculate_change_in_average_by_game,
   calculate_player_pct_of_team_totals,
+  calculate_shooting_pct_change_in_average,
 } = require("../utils.js");
 const {
   Player,
@@ -62,10 +63,18 @@ app.get(
       include: [TeamBoxScore],
       order: [[{ model: TeamBoxScore }, "game_id", "ASC"]],
     });
-    const season_avg = calculate_change_in_average_by_game(
-      team.TeamBoxScores,
-      stat_name
-    );
+    let season_avg;
+    if (!stat_name.includes("pct")) {
+      season_avg = calculate_change_in_average_by_game(
+        team.TeamBoxScores,
+        stat_name
+      );
+    } else {
+      season_avg = calculate_shooting_pct_change_in_average(
+        team.TeamBoxScores,
+        stat_name
+      );
+    }
     const formatted_data = team.TeamBoxScores.map((box_score, index) => ({
       game_number: index + 1,
       game_total: box_score[stat_name],
@@ -83,11 +92,18 @@ app.get(
       include: [PlayerBoxScore],
       order: [[{ model: PlayerBoxScore }, "game_id", "ASC"]],
     });
-
-    const season_avg = calculate_change_in_average_by_game(
-      player.PlayerBoxScores,
-      stat_name
-    );
+    let season_avg;
+    if (!stat_name.includes("pct")) {
+      season_avg = calculate_change_in_average_by_game(
+        player.PlayerBoxScores,
+        stat_name
+      );
+    } else {
+      season_avg = calculate_shooting_pct_change_in_average(
+        player.PlayerBoxScores,
+        stat_name
+      );
+    }
 
     const formatted_data = { avg: [], pct: [] };
     formatted_data.avg = player.PlayerBoxScores.map((box_score, index) => ({
@@ -95,11 +111,13 @@ app.get(
       game_total: box_score[stat_name],
       avg: season_avg[index],
     }));
-    formatted_data.pct = await calculate_player_pct_of_team_totals(
-      player.PlayerBoxScores,
-      stat_name,
-      team_id
-    );
+    if (!stat_name.includes("pct")) {
+      formatted_data.pct = await calculate_player_pct_of_team_totals(
+        player.PlayerBoxScores,
+        stat_name,
+        team_id
+      );
+    }
     res.send(formatted_data);
   })
 );

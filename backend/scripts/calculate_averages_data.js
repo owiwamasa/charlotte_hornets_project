@@ -33,32 +33,28 @@ const get_averages = (box_scores) => {
   return {
     fg: calculate_average(box_scores, "fg"),
     fga: calculate_average(box_scores, "fga"),
-    fg_pct: !calculate_average(box_scores, "fga")
+    fg_pct: !get_total(box_scores, "fga")
       ? 0
       : math_round(
-          (calculate_average(box_scores, "fg") /
-            calculate_average(box_scores, "fga")) *
-            100,
+          (get_total(box_scores, "fg") / get_total(box_scores, "fga")) * 100,
           1
         ),
     three_make: calculate_average(box_scores, "three_make"),
     three_attempt: calculate_average(box_scores, "three_attempt"),
-    three_pct: !calculate_average(box_scores, "three_attempt")
+    three_pct: !get_total(box_scores, "three_attempt")
       ? 0
       : math_round(
-          (calculate_average(box_scores, "three_make") /
-            calculate_average(box_scores, "three_attempt")) *
+          (get_total(box_scores, "three_make") /
+            get_total(box_scores, "three_attempt")) *
             100,
           1
         ),
     ftm: calculate_average(box_scores, "ftm"),
     fta: calculate_average(box_scores, "fta"),
-    ft_pct: !calculate_average(box_scores, "fta")
+    ft_pct: !get_total(box_scores, "fta")
       ? 0
       : math_round(
-          (calculate_average(box_scores, "ftm") /
-            calculate_average(box_scores, "fta")) *
-            100,
+          (get_total(box_scores, "ftm") / get_total(box_scores, "fta")) * 100,
           1
         ),
     orb: calculate_average(box_scores, "orb"),
@@ -84,6 +80,14 @@ const calculate_average = (box_scores, stat) => {
     0
   );
   return math_round(stat_total / games_played, 1);
+};
+
+const get_total = (box_scores, stat) => {
+  const stat_total = box_scores.reduce(
+    (acc, box_score) => acc + box_score[stat],
+    0
+  );
+  return stat_total;
 };
 
 const create_player_average = async (data, person_id) => {
