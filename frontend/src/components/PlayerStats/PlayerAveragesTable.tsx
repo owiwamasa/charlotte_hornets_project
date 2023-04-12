@@ -14,6 +14,7 @@ import PlayerTrendsGraph from "./PlayerTrendsGraph";
 import { MontserratText } from "../../styledComponents";
 import { GraphsContainer, PlayerDropdownContainer } from "./styledComponents";
 import { PlayerAverageStatType, TeamType } from "../../models";
+import PlayerShootingLocationGraph from "./PlayerShootingLocationGraph";
 
 interface Props {
   playerAverageStats: PlayerAverageStatType[];
@@ -120,12 +121,20 @@ const PlayerAveragesTable = ({
                       isPctGraph={false}
                       selectedTeam={selectedTeam}
                     />
-                    <PlayerTrendsGraph
-                      selectedPlayer={selectedPlayer}
-                      selectedPlayerStat={selectedPlayerStat}
-                      isPctGraph={true}
-                      selectedTeam={selectedTeam}
-                    />
+                    {!selectedPlayerStat.includes("%") ? (
+                      <PlayerTrendsGraph
+                        selectedPlayer={selectedPlayer}
+                        selectedPlayerStat={selectedPlayerStat}
+                        isPctGraph={true}
+                        selectedTeam={selectedTeam}
+                      />
+                    ) : (
+                      <PlayerShootingLocationGraph
+                        selectedPlayer={selectedPlayer}
+                        selectedPlayerStat={selectedPlayerStat}
+                        selectedTeam={selectedTeam}
+                      />
+                    )}
                   </GraphsContainer>
                 </TableCell>
               </TableRow>

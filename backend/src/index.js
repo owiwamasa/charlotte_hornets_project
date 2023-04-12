@@ -7,6 +7,7 @@ const {
   calculate_change_in_average_by_game,
   calculate_player_pct_of_team_totals,
   calculate_shooting_pct_change_in_average,
+  location_snake_case_to_name,
 } = require("../utils.js");
 const {
   Player,
@@ -15,6 +16,7 @@ const {
   PlayerAverage,
   TeamBoxScore,
   PlayerBoxScore,
+  PlayerShootingLocationPct,
 } = db;
 
 const app = express();
@@ -105,17 +107,32 @@ app.get(
       );
     }
 
-    const formatted_data = { avg: [], pct: [] };
+    const formatted_data = { avg: [] };
     formatted_data.avg = player.PlayerBoxScores.map((box_score, index) => ({
       game_number: index + 1,
       game_total: box_score[stat_name],
       avg: season_avg[index],
     }));
     if (!stat_name.includes("pct")) {
-      formatted_data.pct = await calculate_player_pct_of_team_totals(
+      formatted_data["pct"] = await calculate_player_pct_of_team_totals(
         player.PlayerBoxScores,
         stat_name,
         team_id
+      );
+    } else {
+      shooting_location_data = await PlayerShootingLocationPct.findOne({
+        where: { person_id },
+      });
+      const shooting_data_filtered_keys = Object.keys(
+        shooting_location_data.dataValues
+      ).filter(
+        (key) => !["id", "person_id", "createdAt", "updatedAt"].includes(key)
+      );
+      formatted_data["location_pct"] = shooting_data_filtered_keys.map(
+        (key) => ({
+          name: location_snake_case_to_name[key],
+          value: shooting_location_data.dataValues[key],
+        })
       );
     }
     res.send(formatted_data);

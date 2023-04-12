@@ -27,7 +27,6 @@ const add_shooting_pct_per_location = async () => {
     let player_shooting_location_pct =
       await create_player_shooting_location_pct(data);
   }
-  //   await PlayerShootingLocationPct.destroy({ truncate: true });
 };
 
 const create_player_shooting_location_pct = async (data) => {

@@ -80,10 +80,21 @@ const calculate_shooting_pct_change_in_average = (box_scores, stat_name) => {
   return res;
 };
 
+const location_snake_case_to_name = {
+  paint_pct: "Paint",
+  top_three_pct: "Top 3",
+  left_wing_three_pct: "L Wing 3",
+  right_wing_three_pct: "R Wing 3",
+  left_corner_three_pct: "L Corner 3",
+  right_corner_three_pct: "R Corner 3",
+  midrange_pct: "Midrange",
+};
+
 module.exports = {
   async_handler,
   math_round,
   calculate_change_in_average_by_game,
   calculate_player_pct_of_team_totals,
   calculate_shooting_pct_change_in_average,
+  location_snake_case_to_name,
 };

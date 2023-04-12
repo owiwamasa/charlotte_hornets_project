@@ -68,3 +68,8 @@ export interface TeamTrendStatType {
   game_number: number;
   game_total: number;
 }
+
+export type ShootingLocationPctType = {
+  name: string;
+  value: number;
+};
