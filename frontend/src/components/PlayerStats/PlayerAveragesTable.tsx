@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -20,6 +20,7 @@ import {
   SortType,
 } from "../../models";
 import PlayerShootingLocationGraph from "./PlayerShootingLocationGraph";
+import { ascendingSort, descendingSort } from "../../utils";
 
 interface Props {
   playerAverageStats: PlayerAverageStatType[];
@@ -43,6 +44,12 @@ const PlayerAveragesTable = ({
   const [sortedPlayerAverageStats, setSortedPlayerAverageStats] =
     useState<PlayerAverageStatType[]>(playerAverageStats);
 
+  useEffect(() => {
+    setOrderBy("PTS");
+    setSortDirection("asc");
+    setSortedPlayerAverageStats(ascendingSort(playerAverageStats, "PTS"));
+  }, [selectedTeam, playerAverageStats]);
+
   const handlePlayerClick = (playerId: number) => {
     if (selectedPlayer === playerId) {
       setSelectedPlayer(undefined);
@@ -55,26 +62,10 @@ const PlayerAveragesTable = ({
     setOrderBy(stat);
     if (sortDirection === "asc") {
       setSortDirection("desc");
-      setSortedPlayerAverageStats(
-        sortedPlayerAverageStats.sort(
-          (a, b) =>
-            // @ts-ignore
-            a.PlayerAverages[0][averageStatHeaders[stat]] -
-            // @ts-ignore
-            b.PlayerAverages[0][averageStatHeaders[stat]]
-        )
-      );
+      setSortedPlayerAverageStats(descendingSort(playerAverageStats, stat));
     } else {
       setSortDirection("asc");
-      setSortedPlayerAverageStats(
-        sortedPlayerAverageStats.sort(
-          (a, b) =>
-            // @ts-ignore
-            b.PlayerAverages[0][averageStatHeaders[stat]] -
-            // @ts-ignore
-            a.PlayerAverages[0][averageStatHeaders[stat]]
-        )
-      );
+      setSortedPlayerAverageStats(ascendingSort(playerAverageStats, stat));
     }
   };
 
