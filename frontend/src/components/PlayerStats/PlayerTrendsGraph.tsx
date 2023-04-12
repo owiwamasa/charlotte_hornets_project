@@ -51,14 +51,14 @@ const PlayerTrendsGraph = ({
       <MontserratText
         sx={{
           paddingLeft: "42px",
-          marginBottom: "12px",
+          marginBottom: "6px",
         }}
       >
         {isPctGraph
           ? "Player % of Team Total"
           : "Game Total and Season Average"}
       </MontserratText>
-      <LineChart width={660} height={300} data={stats} margin={{ left: -20 }}>
+      <LineChart width={660} height={310} data={stats}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="game_number"
@@ -77,7 +77,7 @@ const PlayerTrendsGraph = ({
             angle: -90,
             fontSize: "16px",
             fontFamily: "Montserrat",
-            dx: -4,
+            dx: -16,
           }}
         />
         <Tooltip content={<CustomTooltip />} />
