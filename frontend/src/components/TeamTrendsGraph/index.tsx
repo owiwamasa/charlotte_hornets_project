@@ -77,7 +77,9 @@ const TeamTrendsGraph = ({ selectedTeamId }: Props) => {
             dx: -16,
           }}
         />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip
+          content={<CustomTooltip isPctStat={selectedTeamStat.includes("%")} />}
+        />
         <Legend
           align="center"
           wrapperStyle={{

@@ -10,7 +10,7 @@ import {
   Bar,
 } from "recharts";
 import { GraphTitle, PlayerTrendGraphContainer } from "./styledComponents";
-import CustomTooltip from "./CustomTooltip";
+import ShootingLocationCustomTooltip from "./ShootingLocationCustomTooltip";
 
 interface Props {
   shootingLocationStats?: ShootingLocationPctType[];
@@ -43,7 +43,7 @@ const PlayerShootingLocationGraph = ({ shootingLocationStats }: Props) => {
             dx: -16,
           }}
         />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip content={<ShootingLocationCustomTooltip />} />
         <Legend
           align="center"
           payload={[{ value: "", type: "line", id: "" }]}

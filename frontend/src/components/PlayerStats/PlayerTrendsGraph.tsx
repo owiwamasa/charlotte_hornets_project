@@ -53,7 +53,14 @@ const PlayerTrendsGraph = ({
             dx: -16,
           }}
         />
-        <Tooltip content={<CustomTooltip isPctGraph={isPctGraph} />} />
+        <Tooltip
+          content={
+            <CustomTooltip
+              isPctGraph={isPctGraph}
+              isPctStat={selectedPlayerStat.includes("%")}
+            />
+          }
+        />
         <Legend
           align="center"
           wrapperStyle={{

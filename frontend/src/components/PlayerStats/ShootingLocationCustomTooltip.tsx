@@ -2,7 +2,7 @@ import React from "react";
 import { TooltipText } from "../../assets/CustomTooltip/styledComponents";
 import { TooltipContainer } from "../../assets/CustomTooltip/styledComponents";
 
-const CustomTooltip = ({ active, payload }: any) => {
+const ShootingLocationCustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
       <TooltipContainer>
@@ -16,4 +16,4 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
-export default CustomTooltip;
+export default ShootingLocationCustomTooltip;
