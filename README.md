@@ -1,31 +1,5 @@
 # EuroLeague 2022 Player / Team Analysis Application
 
-This application allows users to view a team's and individual player's season averages, analyze their game-by-game trends by viewing a chosen statistic's game-by-game change in season average and game totals, view a player's percentage contribution to their team total for a particular stat, and evaluate a player's shooting percentages per location on the court.
-
-<br />
-
-## Methodology:
-
-<br />
-1) I created script to clean and seed data in SQLite database by iterating through the provided JSON files and creating League, Game, Team, Player, and Event instances. While iterating, I disregarded incomplete game data and their related play-by-play events.
-<br />
-<br />
-2) With the data seeded in the previous step, I decided to create another script to calculate the team and player box scores for every game. After seeding the box score data, I wrote a script that calculates the per game average data for every team and player using the box score data.
-<br />
-<br />
-3) The final script I created calculates the player shooting percentages per shot location on the court. By finding the minimum and maximum values for loc_x and loc_y coordinates, I was able to determine the corresponding zones on the court for these coordinates and calculated each players shooting percentages per location.
-<br />
-<br />
-4) With the team and player per game average data created in 'Step 2', I created an API route that sends this data to the frontend and displays it in Material UI tables to provide a high-level overview of a the team's and player's performance.
-<br />
-<br />
-5) To provide more context on how a team arrived to their season averages displayed in the previous step, I created a route that takes in a team ID and a stat name as parameters. With this info and team box scores from 'Step 2', I calculated the selected team's game-by-game totals and change in season average by game for the chosen statistic within this route. In the frontend, I displayed this data in a Recharts line graph to easily visualize the trends from this data.
-<br />
-<br />
-6) The final API route is similar to the last, but takes in a player's ID as well to calculate a player's game-by-game totals and change in season average by game for a chosen statistic and displays this data in a Recharts line graph. To provide more context for this data for the chosen statistic, I calculated a player's percentage of their team's total by game and the change their in season average for their contributed percentage to the team total. I chose to display this data in a line graph as well. For shooting percentage statistics that can't be calculated as a player's percentage contribution to the team total, I instead utilized the player shooting percentage per location data calculated in 'Step 3' and displayed this data in a Recharts bar graph to provide further insight into a player's shooting efficiency.
-
-<br />
-
 ## Features:
 
 <br />
@@ -93,6 +67,34 @@ This application allows users to view a team's and individual player's season av
 
 <img src='./frontend/src/assets/Images/player-shooting-per-location.png' width='750px' />
 <br />
+<br />
+
+## Methodology:
+
+<br />
+1) I created script to clean and seed data in SQLite database by iterating through the provided JSON files and creating League, Game, Team, Player, Event, and TeamEvent instances. While iterating, I disregarded incomplete game data and their related play-by-play events.
+<br />
+<br />
+2) With the data seeded in the previous step, I decided to create another script that iterates through all the events and team events to calculate the team and player box scores for every game. After seeding this box score data, I wrote a script that iterates through the box score data and calculates the per game average data for every team and player.
+<br />
+<br />
+3) The final script I wrote calculates the player shooting percentages per shot location on the court. By finding the minimum and maximum values for loc_x and loc_y coordinates, I was able to determine the corresponding zones on the court for these coordinates and calculated each players shooting percentages per location.
+<br />
+<br />
+4) With the team and player per game average data created in "Step 2", I created an API route that sends this data to the frontend and displays it in Material UI tables to provide a high-level overview of a the team's and player's performance (*Feature #1 & #3).
+<br />
+<br />
+5) To provide more context on how a team arrived to their season averages displayed in the previous step, I created a route that takes in a team ID and a stat name as parameters. With this info and team box scores from "Step 2", I calculated the selected team's game-by-game totals and change in season average by game for the chosen statistic. In the frontend, I displayed this data in a Recharts line graph to easily visualize the team's trends from this data (*Feature #2).
+<br />
+<br />
+6) The final API route is similar to the last, but takes in a player's ID as well to calculate a player's game-by-game totals and change in season average by game for a chosen statistic and displays this data in a Recharts line graph (*Feature #5). 
+<br />
+<br />
+To provide more context for this data for the chosen statistic, I also calculated a player's percentage of their team's total by game and the change in their season average for the contributed percentage to their team's total in this route. I chose to display this data in a line graph as well (*Feature #6). 
+<br />
+<br />
+For shooting percentage statistics that can't be calculated as a player's percentage contribution to their team's total, the route instead queries for the player shooting percentage per location data calculated in "Step 3" and displays this data in a Recharts bar graph to provide further insight into a player's shooting efficiency (*Feature #7).
+
 <br />
 
 ## Database Schema:

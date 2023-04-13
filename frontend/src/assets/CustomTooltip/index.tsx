@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import { MontserratText } from "../../styledComponents";
 
-const CustomTooltip = ({ active, payload, label, isPctGraph }: any) => {
+const CustomTooltip = ({ active, payload, isPctGraph }: any) => {
   if (active && payload && payload.length) {
     return (
       <Box
