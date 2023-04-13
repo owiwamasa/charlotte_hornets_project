@@ -6,27 +6,12 @@ import { PlayerAverageStatType, TeamType } from "../../models";
 
 interface Props {
   playerAverageStats: PlayerAverageStatType[];
-  selectedPlayer?: number;
-  setSelectedPlayer: React.Dispatch<React.SetStateAction<number | undefined>>;
-  selectedPlayerStat: string;
-  setSelectedPlayerStat: React.Dispatch<React.SetStateAction<string>>;
   selectedTeam?: TeamType;
 }
 
-const PlayerStats = ({
-  playerAverageStats,
-  selectedPlayer,
-  setSelectedPlayer,
-  selectedPlayerStat,
-  setSelectedPlayerStat,
-  selectedTeam,
-}: Props) => {
+const PlayerStats = ({ playerAverageStats, selectedTeam }: Props) => {
   return (
-    <PlayerStatsContainer
-      sx={{
-        margin: "80px 0 0",
-      }}
-    >
+    <PlayerStatsContainer>
       <MontserratText
         sx={{
           fontSize: "20px",
@@ -37,10 +22,6 @@ const PlayerStats = ({
       </MontserratText>
       <PlayerAveragesTable
         playerAverageStats={playerAverageStats}
-        selectedPlayer={selectedPlayer}
-        setSelectedPlayer={setSelectedPlayer}
-        selectedPlayerStat={selectedPlayerStat}
-        setSelectedPlayerStat={setSelectedPlayerStat}
         selectedTeam={selectedTeam}
       />
     </PlayerStatsContainer>

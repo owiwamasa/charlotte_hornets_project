@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import {
   LineChart,
   CartesianGrid,
@@ -10,42 +9,22 @@ import {
   Line,
 } from "recharts";
 import CustomTooltip from "../../assets/CustomTooltip";
-import { averageStatHeaders } from "../../models";
 import { PlayerTrendGraphContainer } from "./styledComponents";
 import { MontserratText } from "../../styledComponents";
-import { TeamType, TeamTrendStatType } from "../../models";
+import { TrendStatType } from "../../models";
 
 interface Props {
-  selectedPlayer?: number;
   selectedPlayerStat: string;
   isPctGraph: boolean;
-  selectedTeam?: TeamType;
+  trendStats?: TrendStatType[];
 }
 
 const PlayerTrendsGraph = ({
-  selectedPlayer,
   selectedPlayerStat,
   isPctGraph,
-  selectedTeam,
+  trendStats,
 }: Props) => {
-  const [stats, setStats] = useState<TeamTrendStatType[]>();
-
-  useEffect(() => {
-    axios
-      .get(
-        // @ts-ignore
-        `http://localhost:8080/teams/${selectedTeam.id}/players/${selectedPlayer}/stats/${averageStatHeaders[selectedPlayerStat]}`
-      )
-      .then((res) => {
-        if (isPctGraph) {
-          setStats(res.data?.pct);
-        } else {
-          setStats(res.data?.avg);
-        }
-      });
-  }, [selectedPlayer, selectedPlayerStat, isPctGraph, selectedTeam?.id]);
-  if (!stats) return <></>;
-
+  if (!trendStats) return <></>;
   return (
     <PlayerTrendGraphContainer>
       <MontserratText
@@ -58,7 +37,7 @@ const PlayerTrendsGraph = ({
           ? "Player % of Team Total"
           : "Game Total and Season Average"}
       </MontserratText>
-      <LineChart width={700} height={350} data={stats}>
+      <LineChart width={700} height={350} data={trendStats}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="game_number"

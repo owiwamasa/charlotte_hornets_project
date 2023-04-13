@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   LineChart,
   CartesianGrid,
@@ -8,6 +8,7 @@ import {
   Legend,
   Line,
 } from "recharts";
+import axios from "axios";
 import StatSelectorMenu from "../../assets/StatSelectorMenu";
 import CustomTooltip from "../../assets/CustomTooltip";
 import {
@@ -15,19 +16,29 @@ import {
   TeamTrendsGraphContainer,
 } from "./styledComponents";
 import { MontserratText } from "../../styledComponents";
-import { TeamTrendStatType } from "../../models";
+import { TrendStatType, averageStatHeaders } from "../../models";
 
 interface Props {
-  teamTrendStats: TeamTrendStatType[];
-  selectedTeamStat: string;
-  setSelectedTeamStat: React.Dispatch<React.SetStateAction<string>>;
+  selectedTeamId?: number;
 }
 
-const TeamTrendsGraph = ({
-  teamTrendStats,
-  selectedTeamStat,
-  setSelectedTeamStat,
-}: Props) => {
+const TeamTrendsGraph = ({ selectedTeamId }: Props) => {
+  const [selectedTeamStat, setSelectedTeamStat] = useState<string>("PTS");
+  const [teamTrendStats, setTeamTrendStats] = useState<TrendStatType[]>();
+
+  useEffect(() => {
+    if (selectedTeamId) {
+      axios
+        .get(
+          // @ts-ignore
+          `http://localhost:8080/teams/${selectedTeamId}/stats/${averageStatHeaders[selectedTeamStat]}`
+        )
+        .then((res) => {
+          setTeamTrendStats(res.data);
+        });
+    }
+  }, [selectedTeamId, selectedTeamStat]);
+
   return (
     <TeamTrendsGraphContainer>
       <GraphHeaderContainer>

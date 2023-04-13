@@ -1,17 +1,11 @@
 import React from "react";
-import { Box } from "@mui/material";
 import { MontserratText } from "../../styledComponents";
+import { TooltipContainer } from "./styledComponents";
 
 const CustomTooltip = ({ active, payload, isPctGraph }: any) => {
   if (active && payload && payload.length) {
     return (
-      <Box
-        sx={{
-          padding: "12px",
-          backgroundColor: "black",
-          borderRadius: "8px",
-        }}
-      >
+      <TooltipContainer>
         <MontserratText sx={{ color: "white" }}>
           {isPctGraph
             ? `Percentage of Team Total: ${payload[0]?.value}%`
@@ -22,7 +16,7 @@ const CustomTooltip = ({ active, payload, isPctGraph }: any) => {
             ? `Season Average: ${payload[1]?.value}%`
             : `Season Average: ${payload[1]?.value}`}
         </MontserratText>
-      </Box>
+      </TooltipContainer>
     );
   }
 

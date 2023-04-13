@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const PlayerStatsContainer = styled(Box)(() => ({
-  margin: "80px 0 50px",
+  margin: "80px 0 0",
 }));
 
 export const PlayerDropdownContainer = styled(Box)(() => ({

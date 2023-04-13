@@ -63,7 +63,13 @@ export interface PlayerAverageStatType {
   updatedAt: Date;
 }
 
-export interface TeamTrendStatType {
+export interface PlayerTrendsStatType {
+  avg: TrendStatType[];
+  pct?: TrendStatType[];
+  location_pct?: ShootingLocationPctType[];
+}
+
+export interface TrendStatType {
   avg: number;
   game_number: number;
   game_total: number;

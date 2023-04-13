@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Table,
   TableBody,
@@ -18,31 +19,28 @@ import {
   TeamType,
   averageStatHeaders,
   SortType,
+  PlayerTrendsStatType,
 } from "../../models";
 import PlayerShootingLocationGraph from "./PlayerShootingLocationGraph";
-import { ascendingSort, descendingSort } from "../../utils";
+import {
+  ascendingSort,
+  handlePlayerClick,
+  handlePlayerSorting,
+} from "../../utils";
 
 interface Props {
   playerAverageStats: PlayerAverageStatType[];
-  selectedPlayer?: number;
-  setSelectedPlayer: React.Dispatch<React.SetStateAction<number | undefined>>;
-  selectedPlayerStat: string;
-  setSelectedPlayerStat: React.Dispatch<React.SetStateAction<string>>;
   selectedTeam?: TeamType;
 }
 
-const PlayerAveragesTable = ({
-  playerAverageStats,
-  selectedPlayer,
-  setSelectedPlayer,
-  selectedPlayerStat,
-  setSelectedPlayerStat,
-  selectedTeam,
-}: Props) => {
+const PlayerAveragesTable = ({ playerAverageStats, selectedTeam }: Props) => {
+  const [selectedPlayer, setSelectedPlayer] = useState<number>();
+  const [selectedPlayerStat, setSelectedPlayerStat] = useState<string>("PTS");
   const [orderBy, setOrderBy] = useState<string>("PTS");
   const [sortDirection, setSortDirection] = useState<SortType>("asc");
   const [sortedPlayerAverageStats, setSortedPlayerAverageStats] =
     useState<PlayerAverageStatType[]>(playerAverageStats);
+  const [trendStats, setTrendStats] = useState<PlayerTrendsStatType>();
 
   useEffect(() => {
     setOrderBy("PTS");
@@ -50,34 +48,16 @@ const PlayerAveragesTable = ({
     setSortedPlayerAverageStats(ascendingSort(playerAverageStats, "PTS"));
   }, [selectedTeam, playerAverageStats]);
 
-  const handlePlayerClick = (playerId: number) => {
-    if (selectedPlayer === playerId) {
-      setSelectedPlayer(undefined);
-    } else {
-      setSelectedPlayer(playerId);
-    }
-  };
-
-  const handlePlayerSorting = (stat: string) => {
-    setOrderBy(stat);
-    if (stat === "Player Name" && sortDirection === "asc") {
-      setSortDirection("desc");
-      setSortedPlayerAverageStats(
-        descendingSort(playerAverageStats, "first_name")
-      );
-    } else if (stat === "Player Name" && sortDirection === "desc") {
-      setSortDirection("asc");
-      setSortedPlayerAverageStats(
-        ascendingSort(playerAverageStats, "first_name")
-      );
-    } else if (sortDirection === "asc") {
-      setSortDirection("desc");
-      setSortedPlayerAverageStats(descendingSort(playerAverageStats, stat));
-    } else {
-      setSortDirection("asc");
-      setSortedPlayerAverageStats(ascendingSort(playerAverageStats, stat));
-    }
-  };
+  useEffect(() => {
+    axios
+      .get(
+        // @ts-ignore
+        `http://localhost:8080/teams/${selectedTeam?.id}/players/${selectedPlayer}/stats/${averageStatHeaders[selectedPlayerStat]}`
+      )
+      .then((res) => {
+        setTrendStats(res.data);
+      });
+  }, [selectedPlayer, selectedPlayerStat, selectedTeam?.id]);
 
   return (
     <Table>
@@ -97,7 +77,16 @@ const PlayerAveragesTable = ({
               <TableSortLabel
                 active={orderBy === stat}
                 direction={sortDirection}
-                onClick={() => handlePlayerSorting(stat)}
+                onClick={() =>
+                  handlePlayerSorting(
+                    stat,
+                    setOrderBy,
+                    sortDirection,
+                    setSortDirection,
+                    setSortedPlayerAverageStats,
+                    playerAverageStats
+                  )
+                }
               >
                 {stat}
               </TableSortLabel>
@@ -117,7 +106,13 @@ const PlayerAveragesTable = ({
                     backgroundColor: "#EDEDEB",
                   },
                 }}
-                onClick={() => handlePlayerClick(player.id)}
+                onClick={() =>
+                  handlePlayerClick(
+                    player.id,
+                    setSelectedPlayer,
+                    selectedPlayer
+                  )
+                }
               >
                 {[
                   `${player.first_name} ${player.last_name}`,
@@ -168,23 +163,19 @@ const PlayerAveragesTable = ({
                     </PlayerDropdownContainer>
                     <GraphsContainer>
                       <PlayerTrendsGraph
-                        selectedPlayer={selectedPlayer}
                         selectedPlayerStat={selectedPlayerStat}
                         isPctGraph={false}
-                        selectedTeam={selectedTeam}
+                        trendStats={trendStats?.avg}
                       />
                       {!selectedPlayerStat.includes("%") ? (
                         <PlayerTrendsGraph
-                          selectedPlayer={selectedPlayer}
                           selectedPlayerStat={selectedPlayerStat}
                           isPctGraph={true}
-                          selectedTeam={selectedTeam}
+                          trendStats={trendStats?.pct}
                         />
                       ) : (
                         <PlayerShootingLocationGraph
-                          selectedPlayer={selectedPlayer}
-                          selectedPlayerStat={selectedPlayerStat}
-                          selectedTeam={selectedTeam}
+                          shootingLocationStats={trendStats?.location_pct}
                         />
                       )}
                     </GraphsContainer>

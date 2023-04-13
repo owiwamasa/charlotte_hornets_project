@@ -1,4 +1,4 @@
-import { PlayerAverageStatType, averageStatHeaders } from "./models";
+import { PlayerAverageStatType, SortType, averageStatHeaders } from "./models";
 
 export const descendingSort = (
   playerAverageStats: PlayerAverageStatType[],
@@ -46,4 +46,46 @@ export const ascendingSort = (
       // @ts-ignore
       a.PlayerAverages[0][averageStatHeaders[stat]]
   );
+};
+
+export const handlePlayerClick = (
+  playerId: number,
+  setSelectedPlayer: React.Dispatch<React.SetStateAction<number | undefined>>,
+  selectedPlayer?: number
+) => {
+  if (selectedPlayer === playerId) {
+    setSelectedPlayer(undefined);
+  } else {
+    setSelectedPlayer(playerId);
+  }
+};
+
+export const handlePlayerSorting = (
+  stat: string,
+  setOrderBy: React.Dispatch<React.SetStateAction<string>>,
+  sortDirection: SortType,
+  setSortDirection: React.Dispatch<React.SetStateAction<SortType>>,
+  setSortedPlayerAverageStats: React.Dispatch<
+    React.SetStateAction<PlayerAverageStatType[]>
+  >,
+  playerAverageStats: PlayerAverageStatType[]
+) => {
+  setOrderBy(stat);
+  if (stat === "Player Name" && sortDirection === "asc") {
+    setSortDirection("desc");
+    setSortedPlayerAverageStats(
+      descendingSort(playerAverageStats, "first_name")
+    );
+  } else if (stat === "Player Name" && sortDirection === "desc") {
+    setSortDirection("asc");
+    setSortedPlayerAverageStats(
+      ascendingSort(playerAverageStats, "first_name")
+    );
+  } else if (sortDirection === "asc") {
+    setSortDirection("desc");
+    setSortedPlayerAverageStats(descendingSort(playerAverageStats, stat));
+  } else {
+    setSortDirection("asc");
+    setSortedPlayerAverageStats(ascendingSort(playerAverageStats, stat));
+  }
 };

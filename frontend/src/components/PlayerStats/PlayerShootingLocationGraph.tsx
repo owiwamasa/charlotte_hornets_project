@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { TeamType } from "../../models";
-import { averageStatHeaders, ShootingLocationPctType } from "../../models";
+import React from "react";
+import { ShootingLocationPctType } from "../../models";
 import {
   BarChart,
   Legend,
@@ -16,36 +14,16 @@ import { MontserratText } from "../../styledComponents";
 import CustomTooltip from "./CustomTooltip";
 
 interface Props {
-  selectedPlayer: number;
-  selectedPlayerStat: string;
-  selectedTeam?: TeamType;
+  shootingLocationStats?: ShootingLocationPctType[];
 }
 
-const PlayerShootingLocationGraph = ({
-  selectedPlayer,
-  selectedPlayerStat,
-  selectedTeam,
-}: Props) => {
-  const [shootingLocationData, setShootingLocationData] =
-    useState<ShootingLocationPctType[]>();
-
-  useEffect(() => {
-    axios
-      .get(
-        // @ts-ignore
-        `http://localhost:8080/teams/${selectedTeam?.id}/players/${selectedPlayer}/stats/${averageStatHeaders[selectedPlayerStat]}`
-      )
-      .then((res) => {
-        setShootingLocationData(res.data?.location_pct);
-      });
-  }, [selectedPlayer, selectedPlayerStat, selectedTeam?.id]);
-
+const PlayerShootingLocationGraph = ({ shootingLocationStats }: Props) => {
   return (
     <PlayerTrendGraphContainer>
       <MontserratText sx={{ paddingLeft: "65px", marginBottom: "6px" }}>
         Shooting % per Location
       </MontserratText>
-      <BarChart width={700} height={348} data={shootingLocationData}>
+      <BarChart width={700} height={348} data={shootingLocationStats}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="name"
