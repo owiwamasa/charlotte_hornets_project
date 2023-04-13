@@ -25,6 +25,40 @@ const calculate_change_in_average_by_game = (box_scores, stat_name) => {
   return res;
 };
 
+const calculate_shooting_pct_change_in_average = (box_scores, stat_name) => {
+  const stat_made = pct_to_makes_and_attempts[stat_name][0];
+  const stat_attempt = pct_to_makes_and_attempts[stat_name][1];
+  let made_sum = 0;
+  let attempt_sum = 0;
+  let res = [];
+  for (let i = 0; i < box_scores.length; i++) {
+    let box_score = box_scores[i];
+    made_sum += box_score[stat_made];
+    attempt_sum += box_score[stat_attempt];
+
+    res.push(math_round((made_sum / attempt_sum) * 100, 1));
+  }
+  return res;
+};
+
+const calculate_game_total_and_season_avg_data = (box_scores, stat_name) => {
+  let season_avg;
+  if (!stat_name.includes("pct")) {
+    season_avg = calculate_change_in_average_by_game(box_scores, stat_name);
+  } else {
+    season_avg = calculate_shooting_pct_change_in_average(
+      box_scores,
+      stat_name
+    );
+  }
+  const formatted_data = box_scores.map((box_score, index) => ({
+    game_number: index + 1,
+    game_total: box_score[stat_name],
+    avg: season_avg[index],
+  }));
+  return formatted_data;
+};
+
 const calculate_player_pct_of_team_totals = async (
   player_box_scores,
   stat_name,
@@ -58,26 +92,23 @@ const calculate_player_pct_of_team_totals = async (
   return res;
 };
 
+const calculate_shooting_pct_location_data = (shooting_location_data) => {
+  const shooting_data_filtered_keys = Object.keys(
+    shooting_location_data.dataValues
+  ).filter(
+    (key) => !["id", "person_id", "createdAt", "updatedAt"].includes(key)
+  );
+
+  return shooting_data_filtered_keys.map((key) => ({
+    name: location_snake_case_to_name[key],
+    value: shooting_location_data.dataValues[key],
+  }));
+};
+
 const pct_to_makes_and_attempts = {
   fg_pct: ["fg", "fga"],
   three_pct: ["three_make", "three_attempt"],
   ft_pct: ["ftm", "fta"],
-};
-
-const calculate_shooting_pct_change_in_average = (box_scores, stat_name) => {
-  const stat_made = pct_to_makes_and_attempts[stat_name][0];
-  const stat_attempt = pct_to_makes_and_attempts[stat_name][1];
-  let made_sum = 0;
-  let attempt_sum = 0;
-  let res = [];
-  for (let i = 0; i < box_scores.length; i++) {
-    let box_score = box_scores[i];
-    made_sum += box_score[stat_made];
-    attempt_sum += box_score[stat_attempt];
-
-    res.push(math_round((made_sum / attempt_sum) * 100, 1));
-  }
-  return res;
 };
 
 const location_snake_case_to_name = {
@@ -97,4 +128,6 @@ module.exports = {
   calculate_player_pct_of_team_totals,
   calculate_shooting_pct_change_in_average,
   location_snake_case_to_name,
+  calculate_game_total_and_season_avg_data,
+  calculate_shooting_pct_location_data,
 };

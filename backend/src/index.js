@@ -4,10 +4,9 @@ const bodyParser = require("body-parser");
 const db = require("../models/index.js");
 const {
   async_handler,
-  calculate_change_in_average_by_game,
   calculate_player_pct_of_team_totals,
-  calculate_shooting_pct_change_in_average,
-  location_snake_case_to_name,
+  calculate_game_total_and_season_avg_data,
+  calculate_shooting_pct_location_data,
 } = require("../utils.js");
 const {
   Player,
@@ -65,24 +64,9 @@ app.get(
       include: [TeamBoxScore],
       order: [[{ model: TeamBoxScore }, "game_id", "ASC"]],
     });
-    let season_avg;
-    if (!stat_name.includes("pct")) {
-      season_avg = calculate_change_in_average_by_game(
-        team.TeamBoxScores,
-        stat_name
-      );
-    } else {
-      season_avg = calculate_shooting_pct_change_in_average(
-        team.TeamBoxScores,
-        stat_name
-      );
-    }
-    const formatted_data = team.TeamBoxScores.map((box_score, index) => ({
-      game_number: index + 1,
-      game_total: box_score[stat_name],
-      avg: season_avg[index],
-    }));
-    res.send(formatted_data);
+    res.send(
+      calculate_game_total_and_season_avg_data(team.TeamBoxScores, stat_name)
+    );
   })
 );
 
@@ -94,45 +78,27 @@ app.get(
       include: [PlayerBoxScore],
       order: [[{ model: PlayerBoxScore }, "game_id", "ASC"]],
     });
-    let season_avg;
-    if (!stat_name.includes("pct")) {
-      season_avg = calculate_change_in_average_by_game(
+
+    const formatted_data = {
+      avg: calculate_game_total_and_season_avg_data(
         player.PlayerBoxScores,
         stat_name
+      ),
+    };
+
+    if (stat_name.includes("pct")) {
+      shooting_location_data = await PlayerShootingLocationPct.findOne({
+        where: { person_id },
+      });
+
+      formatted_data["location_pct"] = calculate_shooting_pct_location_data(
+        shooting_location_data
       );
     } else {
-      season_avg = calculate_shooting_pct_change_in_average(
-        player.PlayerBoxScores,
-        stat_name
-      );
-    }
-
-    const formatted_data = { avg: [] };
-    formatted_data.avg = player.PlayerBoxScores.map((box_score, index) => ({
-      game_number: index + 1,
-      game_total: box_score[stat_name],
-      avg: season_avg[index],
-    }));
-    if (!stat_name.includes("pct")) {
       formatted_data["pct"] = await calculate_player_pct_of_team_totals(
         player.PlayerBoxScores,
         stat_name,
         team_id
-      );
-    } else {
-      shooting_location_data = await PlayerShootingLocationPct.findOne({
-        where: { person_id },
-      });
-      const shooting_data_filtered_keys = Object.keys(
-        shooting_location_data.dataValues
-      ).filter(
-        (key) => !["id", "person_id", "createdAt", "updatedAt"].includes(key)
-      );
-      formatted_data["location_pct"] = shooting_data_filtered_keys.map(
-        (key) => ({
-          name: location_snake_case_to_name[key],
-          value: shooting_location_data.dataValues[key],
-        })
       );
     }
     res.send(formatted_data);
