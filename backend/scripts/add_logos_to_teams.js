@@ -2,7 +2,7 @@ const db = require("../models");
 const { Team } = db;
 
 const add_logo_url_to_team = async (team_name, logo_url) => {
-  const team = await Team.update({ logo_url }, { where: { team_name } });
+  await Team.update({ logo_url }, { where: { team_name } });
 };
 
 add_logo_url_to_team(

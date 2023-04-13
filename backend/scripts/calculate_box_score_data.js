@@ -7,12 +7,12 @@ const calculate_all_box_scores = async () => {
   const games = await Game.findAll();
   for (let i = 0; i < games.length; i++) {
     let game = games[i];
-    await calculate_team_box_scores_by_game(game.id, game.visitor_team_id);
-    await calculate_team_box_scores_by_game(game.id, game.home_team_id);
+    await calculate_team_and_player_box_scores(game.id, game.visitor_team_id);
+    await calculate_team_and_player_box_scores(game.id, game.home_team_id);
   }
 };
 
-const calculate_team_box_scores_by_game = async (game_id, team_id) => {
+const calculate_team_and_player_box_scores = async (game_id, team_id) => {
   const players = await Player.findAll({
     where: {
       team_id,
