@@ -17,7 +17,7 @@
 
 - Choose a traditional statistic from in dropdown menu
 - Analyze a chosen team's game-by-game totals and track the change in their season average for a selected statistic
-- Hover over a point on the line graph to view more detail in a custom tooltip
+- Hover over a point on the line graph to view more detail in a tooltip
 
 <img src='./frontend/src/assets/Images/team-season-trends.png' width='750px' />
 <br />
@@ -45,7 +45,7 @@
 ### 5) Player Game Total and Season Average Line Graph
 
 - Analyze a chosen player's game-by-game totals and track the change in their season average for a selected statistic
-- Hover over a point on the line graph to view more detail in a custom tooltip
+- Hover over a point on the line graph to view more detail in a tooltip
 
 <img src='./frontend/src/assets/Images/player-game-total-season-avg-trend.png' width='750px' />
 <br />
@@ -54,7 +54,7 @@
 ### 6) Player Percentage of Team Total Line Graph
 
 - Analyze a player's contributed percentage of their team's game total for a selected statistic and track the change in their season average
-- Hover over a point on the line graph to view more detail in a custom tooltip
+- Hover over a point on the line graph to view more detail in a tooltip
 
 <img src='./frontend/src/assets/Images/player-pct-team-total.png' width='750px' />
 <br />
@@ -63,7 +63,7 @@
 ### 7) Player Shooting Percentages per Location Bar Graph
 
 - Upon selecting a shooting percentage in the 'Select Statistic' menu, a user can analyze a player's shooting percentages per location on the court
-- Hover over a point on the bar graph to view more detail in a custom tooltip
+- Hover over a point on the bar graph to view more detail in a tooltip
 
 <img src='./frontend/src/assets/Images/player-shooting-per-location.png' width='750px' />
 <br />
@@ -72,28 +72,28 @@
 ## Methodology:
 
 <br />
-1) I created script to clean and seed data in SQLite database by iterating through the provided JSON files and creating League, Game, Team, Player, Event, and TeamEvent instances. While iterating, I disregarded incomplete game data and their related play-by-play events.
+1) I created script to clean and seed data into the SQLite database by iterating through the provided JSON files and creating League, Game, Team, Player, Event, and Team Event instances. While iterating, I disregarded incomplete game data and their related play-by-play events.
 <br />
 <br />
-2) With the data seeded in the previous step, I decided to create another script that iterates through all the events and team events to calculate the team and player box scores for every game. After seeding this box score data, I wrote a script that iterates through the box score data and calculates the per game average data for every team and player.
+2) With the data seeded in the previous step, I created a script to iterate through all the events and team events to calculate the team and player box scores for every game. With this box score data seeded into the database, I wrote another script to iterate through the box score data and calculate and seed the per game averages for every team and player.
 <br />
 <br />
-3) The final script I wrote calculates the player shooting percentages per shot location on the court. By finding the minimum and maximum values for loc_x and loc_y coordinates, I was able to determine the corresponding zones on the court for these coordinates and calculated each players shooting percentages per location.
+3) The final script I wrote calculates the player shooting percentages per shot location on the court. By finding the minimum and maximum possible values for loc_x and loc_y coordinates, I was able to determine the corresponding zones on the court for these coordinates and calculated each players shooting percentages per location.
 <br />
 <br />
-4) With the team and player per game average data created in "Step 2", I created an API route that sends this data to the frontend and displays it in Material UI tables to provide a high-level overview of a the team's and player's performance (*Feature #1 & #3).
+4) With the team and player per game averages seeded in "Step 2", I created an API route that sends this data to the frontend and displays it in Material UI tables to provide a high-level overview of a team's / player's performance (*Feature #1 & #3).
 <br />
 <br />
-5) To provide more context on how a team arrived to their season averages displayed in the previous step, I created a route that takes in a team ID and a stat name as parameters. With this info and team box scores from "Step 2", I calculated the selected team's game-by-game totals and change in season average by game for the chosen statistic. In the frontend, I displayed this data in a Recharts line graph to easily visualize the team's trends from this data (*Feature #2).
+5) To provide more context on how a team arrived at their season averages, I created a route that takes in a team ID and a stat name as parameters. With this info and team box scores from "Step 2", I calculated the selected team's game-by-game totals and change in season average by game for the chosen statistic. In the frontend, I displayed this data in a Recharts line graph to easily visualize the team's trends from this data (*Feature #2).
 <br />
 <br />
-6) The final API route is similar to the last, but takes in a player's ID as well to calculate a player's game-by-game totals and change in season average by game for a chosen statistic and displays this data in a Recharts line graph (*Feature #5). 
+6) The final API route is similar to the last, but takes in a player's ID as well to calculate a player's game-by-game totals and change in season average by game for a chosen statistic, and displayed this data in a Recharts line graph (*Feature #5). 
 <br />
 <br />
-To provide more context for this data for the chosen statistic, I also calculated a player's percentage of their team's total by game and the change in their season average for the contributed percentage to their team's total in this route. I chose to display this data in a line graph as well (*Feature #6). 
+To provide more context for the data on a chosen statistic, I calculated a player's percentage of their team's total by game and the change in their season average for their contributed percentage to their team's stat total within this route. I chose to display this data in a line graph as well (*Feature #6). 
 <br />
 <br />
-For shooting percentage statistics that can't be calculated as a player's percentage contribution to their team's total, the route instead queries for the player shooting percentage per location data calculated in "Step 3" and displays this data in a Recharts bar graph to provide further insight into a player's shooting efficiency (*Feature #7).
+For shooting percentage statistics that can't be calculated as a player's percentage contribution to their team's stat total, the route instead queries for the player shooting percentage per location data calculated in "Step 3" and displays this data in a Recharts bar graph to provide further insight into a player's shooting efficiency (*Feature #7).
 
 <br />
 
