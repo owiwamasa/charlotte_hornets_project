@@ -84,16 +84,16 @@
 4) With the team and player per game averages seeded in "Step 2", I created an API route that sends this data to the frontend and displays it in Material UI tables to provide a high-level overview of a team's / player's performance (*Feature #1 & #3).
 <br />
 <br />
-5) To provide more context on how a team arrived at their season averages, I created a route that takes in a team ID and a stat name as parameters. With this info and team box scores from "Step 2", I calculated the selected team's game-by-game totals and change in season average by game for the chosen statistic. In the frontend, I displayed this data in a Recharts line graph to easily visualize the team's trends from this data (*Feature #2).
+5) To provide more context on how a team arrived at their season averages, I created a route that takes in a team ID and a stat name as parameters. With this info and the team box scores from "Step 2", I calculated the selected team's game-by-game totals and change in season average by game for the chosen statistic. In the frontend, I displayed this data in a Recharts line graph to easily visualize the team's trends from this data (*Feature #2).
 <br />
 <br />
 6) The final API route is similar to the last, but takes in a player's ID as well to calculate a player's game-by-game totals and change in season average by game for a chosen statistic, and displayed this data in a Recharts line graph (*Feature #5). 
 <br />
 <br />
-To provide more context for the data on a chosen statistic, I calculated a player's percentage of their team's total by game and the change in their season average for their contributed percentage to their team's stat total within this route. I chose to display this data in a line graph as well (*Feature #6). 
+To provide more context for the player data of the chosen statistic, I calculated the player's percentage of their team's total for the chosen stat per game, and the change in their season average for their contributed percentage to their team's stat total within this route. I chose to display this data in a line graph as well (*Feature #6). 
 <br />
 <br />
-For shooting percentage statistics that can't be calculated as a player's percentage contribution to their team's stat total, the route instead queries for the player shooting percentage per location data calculated in "Step 3" and displays this data in a Recharts bar graph to provide further insight into a player's shooting efficiency (*Feature #7).
+For shooting percentage statistics that can't be calculated as a player's percentage contribution to their team's stat total, I chose to have the route instead query for the player's shooting percentage per location data, which I calculated in "Step 3". I displayed this data in a Recharts bar graph to provide further insight into a player's shooting efficiency (*Feature #7).
 
 <br />
 
