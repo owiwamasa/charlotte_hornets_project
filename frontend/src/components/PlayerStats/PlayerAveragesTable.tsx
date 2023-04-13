@@ -38,8 +38,9 @@ const PlayerAveragesTable = ({ playerAverageStats, selectedTeam }: Props) => {
   const [selectedPlayerStat, setSelectedPlayerStat] = useState<string>("PTS");
   const [orderBy, setOrderBy] = useState<string>("PTS");
   const [sortDirection, setSortDirection] = useState<SortType>("asc");
-  const [sortedPlayerAverageStats, setSortedPlayerAverageStats] =
-    useState<PlayerAverageStatType[]>(playerAverageStats);
+  const [sortedPlayerAverageStats, setSortedPlayerAverageStats] = useState<
+    PlayerAverageStatType[]
+  >(ascendingSort(playerAverageStats, "PTS"));
   const [trendStats, setTrendStats] = useState<PlayerTrendsStatType>();
 
   useEffect(() => {

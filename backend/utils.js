@@ -19,7 +19,7 @@ const calculate_change_in_average_by_game = (box_scores, stat_name) => {
   for (let i = 0; i < box_scores.length; i++) {
     let box_score = box_scores[i];
     sum += box_score[stat_name];
-    res.push(math_round(sum / (i + 1), 1));
+    res.push(sum ? math_round(sum / (i + 1), 1) : 0);
   }
 
   return res;
@@ -36,7 +36,7 @@ const calculate_shooting_pct_change_in_average = (box_scores, stat_name) => {
     made_sum += box_score[stat_made];
     attempt_sum += box_score[stat_attempt];
 
-    res.push(math_round((made_sum / attempt_sum) * 100, 1));
+    res.push(made_sum ? math_round((made_sum / attempt_sum) * 100, 1) : 0);
   }
   return res;
 };
