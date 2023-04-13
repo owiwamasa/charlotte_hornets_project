@@ -12,8 +12,12 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StatSelectorMenu from "../../assets/StatSelectorMenu";
 import PlayerTrendsGraph from "./PlayerTrendsGraph";
-import { MontserratText } from "../../styledComponents";
-import { GraphsContainer, PlayerDropdownContainer } from "./styledComponents";
+import {
+  GraphsContainer,
+  PlayerDropdownContainer,
+  PlayerNameText,
+  PlayerStatsTitle,
+} from "./styledComponents";
 import {
   PlayerAverageStatType,
   TeamType,
@@ -36,11 +40,10 @@ interface Props {
 const PlayerAveragesTable = ({ playerAverageStats, selectedTeam }: Props) => {
   const [selectedPlayer, setSelectedPlayer] = useState<number>();
   const [selectedPlayerStat, setSelectedPlayerStat] = useState<string>("PTS");
-  const [orderBy, setOrderBy] = useState<string>("PTS");
+  const [orderBy, setOrderBy] = useState<string>("");
   const [sortDirection, setSortDirection] = useState<SortType>("asc");
-  const [sortedPlayerAverageStats, setSortedPlayerAverageStats] = useState<
-    PlayerAverageStatType[]
-  >(ascendingSort(playerAverageStats, "PTS"));
+  const [sortedPlayerAverageStats, setSortedPlayerAverageStats] =
+    useState<PlayerAverageStatType[]>(playerAverageStats);
   const [trendStats, setTrendStats] = useState<PlayerTrendsStatType>();
 
   useEffect(() => {
@@ -126,20 +129,14 @@ const PlayerAveragesTable = ({ playerAverageStats, selectedTeam }: Props) => {
                     sx={{ fontFamily: "Montserrat", padding: "12px 6px" }}
                   >
                     {index === 0 ? (
-                      <MontserratText
-                        sx={{
-                          textTransform: "capitalize",
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
+                      <PlayerNameText>
                         {player.id === selectedPlayer ? (
                           <ExpandMoreIcon sx={{ marginRight: "16px" }} />
                         ) : (
                           <ChevronRightIcon sx={{ marginRight: "16px" }} />
                         )}
                         {`${player.first_name} ${player.last_name}`}{" "}
-                      </MontserratText>
+                      </PlayerNameText>
                     ) : (
                       // @ts-ignore
                       player.PlayerAverages[0][stat]
@@ -154,9 +151,7 @@ const PlayerAveragesTable = ({ playerAverageStats, selectedTeam }: Props) => {
                     sx={{ backgroundColor: "#EDEDEB", padding: "24px" }}
                   >
                     <PlayerDropdownContainer>
-                      <MontserratText
-                        sx={{ fontSize: "20px" }}
-                      >{`Player Season Trends for ${selectedPlayerStat}`}</MontserratText>
+                      <PlayerStatsTitle>{`Player Season Trends for ${selectedPlayerStat}`}</PlayerStatsTitle>
                       <StatSelectorMenu
                         selectedStat={selectedPlayerStat}
                         setSelectedStat={setSelectedPlayerStat}

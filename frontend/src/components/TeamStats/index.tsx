@@ -1,7 +1,6 @@
 import React from "react";
-import { TeamStatsContainer } from "./styledComponents";
+import { TeamStatsContainer, TeamStatsTitle } from "./styledComponents";
 import TeamAveragesTable from "./TeamAveragesTable";
-import { MontserratText } from "../../styledComponents";
 import { AverageStatType } from "../../models";
 
 interface Props {
@@ -11,14 +10,9 @@ interface Props {
 const TeamStats = ({ teamAverageStats }: Props) => {
   return (
     <TeamStatsContainer>
-      <MontserratText
-        sx={{
-          fontSize: "20px",
-          marginBottom: "12px",
-        }}
-      >
+      <TeamStatsTitle sx={{ marginBottom: "12px" }}>
         Team Per Game Statistics
-      </MontserratText>
+      </TeamStatsTitle>
       <TeamAveragesTable teamAverageStats={teamAverageStats} />
     </TeamStatsContainer>
   );

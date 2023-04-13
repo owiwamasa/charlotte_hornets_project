@@ -15,8 +15,8 @@ import {
   GraphHeaderContainer,
   TeamTrendsGraphContainer,
 } from "./styledComponents";
-import { MontserratText } from "../../styledComponents";
 import { TrendStatType, averageStatHeaders } from "../../models";
+import { TeamStatsTitle } from "../TeamStats/styledComponents";
 
 interface Props {
   selectedTeamId?: number;
@@ -42,12 +42,11 @@ const TeamTrendsGraph = ({ selectedTeamId }: Props) => {
   return (
     <TeamTrendsGraphContainer>
       <GraphHeaderContainer>
-        <MontserratText
+        <TeamStatsTitle
           sx={{
-            fontSize: "20px",
             marginBottom: "30px",
           }}
-        >{`Team Season Trend for ${selectedTeamStat}`}</MontserratText>
+        >{`Team Season Trend for ${selectedTeamStat}`}</TeamStatsTitle>
         <StatSelectorMenu
           selectedStat={selectedTeamStat}
           setSelectedStat={setSelectedTeamStat}

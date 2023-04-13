@@ -9,8 +9,7 @@ import {
   Tooltip,
   Bar,
 } from "recharts";
-import { PlayerTrendGraphContainer } from "./styledComponents";
-import { MontserratText } from "../../styledComponents";
+import { GraphTitle, PlayerTrendGraphContainer } from "./styledComponents";
 import CustomTooltip from "./CustomTooltip";
 
 interface Props {
@@ -20,9 +19,9 @@ interface Props {
 const PlayerShootingLocationGraph = ({ shootingLocationStats }: Props) => {
   return (
     <PlayerTrendGraphContainer>
-      <MontserratText sx={{ paddingLeft: "65px", marginBottom: "6px" }}>
+      <GraphTitle sx={{ paddingLeft: "65px", marginBottom: "6px" }}>
         Shooting % per Location
-      </MontserratText>
+      </GraphTitle>
       <BarChart width={700} height={348} data={shootingLocationStats}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis

@@ -9,8 +9,7 @@ import {
   Line,
 } from "recharts";
 import CustomTooltip from "../../assets/CustomTooltip";
-import { PlayerTrendGraphContainer } from "./styledComponents";
-import { MontserratText } from "../../styledComponents";
+import { GraphTitle, PlayerTrendGraphContainer } from "./styledComponents";
 import { TrendStatType } from "../../models";
 
 interface Props {
@@ -27,16 +26,11 @@ const PlayerTrendsGraph = ({
   if (!trendStats) return <></>;
   return (
     <PlayerTrendGraphContainer>
-      <MontserratText
-        sx={{
-          paddingLeft: "65px",
-          marginBottom: "6px",
-        }}
-      >
+      <GraphTitle>
         {isPctGraph
           ? "Player % of Team Total"
           : "Game Total and Season Average"}
-      </MontserratText>
+      </GraphTitle>
       <LineChart width={700} height={350} data={trendStats}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis

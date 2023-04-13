@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 
 export const TeamStatsContainer = styled(Box)(() => ({
   margin: "0 50px",
@@ -9,4 +9,9 @@ export const TeamStatsContainer = styled(Box)(() => ({
   position: "absolute",
   top: "200px",
   width: "1323px",
+}));
+
+export const TeamStatsTitle = styled(Typography)(() => ({
+  fontFamily: "Montserrat",
+  fontSize: "20px",
 }));

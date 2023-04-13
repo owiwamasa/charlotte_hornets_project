@@ -1,21 +1,15 @@
 import React from "react";
-import { Box } from "@mui/material";
-import { MontserratText } from "../../styledComponents";
+import { TooltipText } from "../../assets/CustomTooltip/styledComponents";
+import { TooltipContainer } from "../../assets/CustomTooltip/styledComponents";
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
-      <Box
-        sx={{
-          padding: "12px",
-          backgroundColor: "black",
-          borderRadius: "8px",
-        }}
-      >
-        <MontserratText
+      <TooltipContainer>
+        <TooltipText
           sx={{ color: "white" }}
-        >{`${payload[0]?.value}%`}</MontserratText>
-      </Box>
+        >{`${payload[0]?.value}%`}</TooltipText>
+      </TooltipContainer>
     );
   }
 
